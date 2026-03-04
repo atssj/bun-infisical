@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dockerfile Examples | Bun + Infisical Docker Image</title>
+    <meta name="description" content="Practical Dockerfile examples for building applications with Bun and Infisical. Learn basic setups, multi-stage builds, and secrets injection patterns.">
+    <meta name="keywords" content="Dockerfile, Bun, Infisical, Docker examples, multi-stage build, secrets management, container best practices">
+    <meta name="author" content="SSWork">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://atssj.github.io/bun-infisical/dockerfile-examples/">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="Dockerfile Examples | Bun + Infisical Docker Image">
+    <meta property="og:description" content="Practical Dockerfile examples for building applications with Bun and Infisical. Learn basic setups, multi-stage builds, and secrets injection patterns.">
+    <meta property="og:image" content="https://atssj.github.io/bun-infisical/assets/images/og-image.png">
+    <meta property="og:image:alt" content="Bun + Infisical Docker Image Logo">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://atssj.github.io/bun-infisical/dockerfile-examples/">
+    <meta property="og:site_name" content="Bun Infisical Docker">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Dockerfile Examples | Bun + Infisical Docker Image">
+    <meta name="twitter:description" content="Practical Dockerfile examples for building applications with Bun and Infisical. Learn basic setups, multi-stage builds, and secrets injection patterns.">
+    <meta name="twitter:image" content="https://atssj.github.io/bun-infisical/assets/images/og-image.png">
+    <meta name="twitter:image:alt" content="Bun + Infisical Docker Image Logo">
+    <meta name="twitter:creator" content="@sswork">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="msapplication-TileColor" content="#3b82f6">
+    
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- JSON-LD Structured Data - HowTo Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to Create Dockerfiles with Bun and Infisical",
+        "description": "Learn how to write Dockerfiles for applications using Bun JavaScript runtime with Infisical secrets management. Covers basic setups, multi-stage builds, and production-ready configurations.",
+        "image": "https://atssj.github.io/bun-infisical/assets/images/og-image.png",
+        "totalTime": "PT15M",
+        "estimatedCost": {
+            "@type": "MonetaryAmount",
+            "currency": "USD",
+            "value": "0"
+        },
+        "supply": [
+            {
+                "@type": "HowToSupply",
+                "name": "Docker installed"
+            },
+            {
+                "@type": "HowToSupply",
+                "name": "Bun project with package.json"
+            }
+        ],
+        "tool": [
+            {
+                "@type": "HowToTool",
+                "name": "Text editor"
+            }
+        ],
+        "step": [
+            {
+                "@type": "HowToStep",
+                "position": 1,
+                "name": "Create a Basic Dockerfile",
+                "text": "Start with the sswork/bun-infisical base image, set the working directory, copy package files, install dependencies, copy source code, and configure the startup command with Infisical.",
+                "url": "https://atssj.github.io/bun-infisical/dockerfile-examples/#basic-example",
+                "image": "https://atssj.github.io/bun-infisical/assets/images/og-image.png"
+            },
+            {
+                "@type": "HowToStep",
+                "position": 2,
+                "name": "Optimize with Multi-Stage Build",
+                "text": "Use a multi-stage build to create smaller production images by separating build dependencies from runtime.",
+                "url": "https://atssj.github.io/bun-infisical/dockerfile-examples/#multistage-example"
+            },
+            {
+                "@type": "HowToStep",
+                "position": 3,
+                "name": "Configure Infisical Secrets Injection",
+                "text": "Set up Infisical to inject secrets at runtime using the infisical run command.",
+                "url": "https://atssj.github.io/bun-infisical/dockerfile-examples/#infisical-example"
+            },
+            {
+                "@type": "HowToStep",
+                "position": 4,
+                "name": "Follow Dockerfile Best Practices",
+                "text": "Apply security and optimization best practices for production deployments.",
+                "url": "https://atssj.github.io/bun-infisical/dockerfile-examples/#best-practices"
+            }
+        ]
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://atssj.github.io/bun-infisical/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Dockerfile Examples",
+                "item": "https://atssj.github.io/bun-infisical/dockerfile-examples/"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header class="site-header" role="banner">
+        <div class="container">
+            <div class="header-content">
+                <a href="/bun-infisical/" class="logo" aria-label="Bun Infisical Docker - Home">
+                    <img src="../assets/images/logo.svg" alt="Bun Infisical Docker" width="40" height="40">
+                    <span class="logo-text">Bun Infisical</span>
+                </a>
+                
+                <nav class="main-nav" role="navigation" aria-label="Main navigation">
+                    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">
+                        <span class="nav-toggle-icon"></span>
+                    </button>
+                    <ul id="nav-menu" class="nav-menu" role="menubar">
+                        <li role="none"><a href="/bun-infisical/" class="nav-link" role="menuitem">Home</a></li>
+                        <li role="none"><a href="../usage/" class="nav-link" role="menuitem">Usage Guide</a></li>
+                        <li role="none"><a href="../examples/" class="nav-link" role="menuitem">Examples</a></li>
+                        <li role="none"><a href="../ci-cd/" class="nav-link" role="menuitem">CI/CD</a></li>
+                        <li role="none"><a href="https://github.com/SSWork/bun-infisical" class="nav-link external" role="menuitem" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <div class="container">
+                <ol class="breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                        <a href="/bun-infisical/" itemprop="item"><span itemprop="name">Home</span></a>
+                        <meta itemprop="position" content="1">
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                        <span itemprop="name">Dockerfile Examples</span>
+                        <meta itemprop="position" content="2">
+                    </li>
+                </ol>
+            </div>
+        </nav>
+
+        <section class="page-header" aria-labelledby="page-title">
+            <div class="container">
+                <h1 id="page-title" class="page-title">Dockerfile Examples</h1>
+                <p class="page-description">
+                    Practical Dockerfile patterns for building applications with Bun and Infisical. 
+                    From basic setups to optimized multi-stage builds with secure secrets injection.
+                </p>
+            </div>
+        </section>
+
+        <!-- Basic Dockerfile Example -->
+        <section id="basic-example" class="example-section" aria-labelledby="basic-title">
+            <div class="container">
+                <h2 id="basic-title" class="section-title">Basic Dockerfile</h2>
+                <p class="section-intro">
+                    A simple Dockerfile for getting started quickly. This example shows the minimal 
+                    configuration needed to run a Bun application with Infisical.
+                </p>
+                
+                <article class="code-example">
+                    <h3 class="code-title">Dockerfile</h3>
+                    <div class="code-block">
+                        <pre><code># Use the Bun + Infisical base image
+FROM sswork/bun-infisical:latest
+
+# Set the working directory
+WORKDIR /app
+
+# Copy package files first (for better caching)
+COPY package.json bun.lockb ./
+
+# Install dependencies
+RUN bun install
+
+# Copy application source code
+COPY . .
+
+# Expose the application port
+EXPOSE 3000
+
+# Run the application with Infisical secrets injection
+CMD ["infisical", "run", "--", "bun", "start"]</code></pre>
+                        <button class="copy-btn" aria-label="Copy basic Dockerfile" data-clipboard-text="# Use the Bun + Infisical base image
+FROM sswork/bun-infisical:latest
+
+# Set the working directory
+WORKDIR /app
+
+# Copy package files first (for better caching)
+COPY package.json bun.lockb ./
+
+# Install dependencies
+RUN bun install
+
+# Copy application source code
+COPY . .
+
+# Expose the application port
+EXPOSE 3000
+
+# Run the application with Infisical secrets injection
+CMD [&quot;infisical&quot;, &quot;run&quot;, &quot;--&quot;, &quot;bun&quot;, &quot;start&quot;]">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+
+                <div class="info-box">
+                    <h4>Key Points</h4>
+                    <ul>
+                        <li><code>COPY package.json bun.lockb ./</code> before other files enables Docker layer caching</li>
+                        <li><code>WORKDIR /app</code> creates a dedicated directory for the application</li>
+                        <li><code>EXPOSE 3000</code> documents the port your app listens on</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Multi-Stage Build Example -->
+        <section id="multistage-example" class="example-section" aria-labelledby="multistage-title">
+            <div class="container">
+                <h2 id="multistage-title" class="section-title">Multi-Stage Build</h2>
+                <p class="section-intro">
+                    Multi-stage builds create smaller, more secure production images by separating 
+                    build-time dependencies from runtime. This example reduces image size significantly.
+                </p>
+                
+                <article class="code-example">
+                    <h3 class="code-title">Dockerfile (Multi-Stage)</h3>
+                    <div class="code-block">
+                        <pre><code># Stage 1: Build
+FROM sswork/bun-infisical:latest AS builder
+
+WORKDIR /app
+
+# Copy and install dependencies
+COPY package.json bun.lockb ./
+RUN bun install
+
+# Copy source and build
+COPY . .
+RUN bun run build
+
+# Stage 2: Production
+FROM sswork/bun-infisical:latest AS production
+
+WORKDIR /app
+
+# Copy only necessary files from builder
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/node_modules ./node_modules
+
+# Create non-root user for security
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S bunuser -u 1001
+
+# Change ownership of the app directory
+RUN chown -R bunuser:nodejs /app
+USER bunuser
+
+# Expose port
+EXPOSE 3000
+
+# Run with Infisical
+CMD ["infisical", "run", "--", "bun", "dist/index.js"]</code></pre>
+                        <button class="copy-btn" aria-label="Copy multi-stage Dockerfile" data-clipboard-text="# Stage 1: Build
+FROM sswork/bun-infisical:latest AS builder
+
+WORKDIR /app
+
+# Copy and install dependencies
+COPY package.json bun.lockb ./
+RUN bun install
+
+# Copy source and build
+COPY . .
+RUN bun run build
+
+# Stage 2: Production
+FROM sswork/bun-infisical:latest AS production
+
+WORKDIR /app
+
+# Copy only necessary files from builder
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/node_modules ./node_modules
+
+# Create non-root user for security
+RUN addgroup -g 1001 -S nodejs &amp;&amp; \
+    adduser -S bunuser -u 1001
+
+# Change ownership of the app directory
+RUN chown -R bunuser:nodejs /app
+USER bunuser
+
+# Expose port
+EXPOSE 3000
+
+# Run with Infisical
+CMD [&quot;infisical&quot;, &quot;run&quot;, &quot;--&quot;, &quot;bun&quot;, &quot;dist/index.js&quot;]">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+
+                <div class="info-box info-box-tip">
+                    <h4>Size Comparison</h4>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Build Type</th>
+                                <th>Typical Size</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Basic (single stage)</td>
+                                <td>~150-200 MB</td>
+                            </tr>
+                            <tr>
+                                <td>Multi-stage optimized</td>
+                                <td>~80-120 MB</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Infisical Secrets Injection -->
+        <section id="infisical-example" class="example-section" aria-labelledby="infisical-title">
+            <div class="container">
+                <h2 id="infisical-title" class="section-title">With Infisical Secrets Injection</h2>
+                <p class="section-intro">
+                    This example demonstrates proper Infisical configuration for production deployments, 
+                    including environment variable setup and service token usage.
+                </p>
+                
+                <article class="code-example">
+                    <h3 class="code-title">Dockerfile with Infisical Setup</h3>
+                    <div class="code-block">
+                        <pre><code># Production Dockerfile with Infisical
+FROM sswork/bun-infisical:latest
+
+# Set working directory
+WORKDIR /app
+
+# Copy dependency files
+COPY package.json bun.lockb ./
+
+# Install production dependencies only
+RUN bun install --production
+
+# Copy application code
+COPY . .
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S appuser -u 1001 && \
+    chown -R appuser:nodejs /app
+USER appuser
+
+# Expose application port
+EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD bun -e "console.log('healthy')" || exit 1
+
+# Entrypoint script for Infisical configuration
+COPY --chown=appuser:nodejs docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["infisical", "run", "--", "bun", "start"]</code></pre>
+                        <button class="copy-btn" aria-label="Copy Infisical Dockerfile" data-clipboard-text="# Production Dockerfile with Infisical
+FROM sswork/bun-infisical:latest
+
+# Set working directory
+WORKDIR /app
+
+# Copy dependency files
+COPY package.json bun.lockb ./
+
+# Install production dependencies only
+RUN bun install --production
+
+# Copy application code
+COPY . .
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs &amp;&amp; \
+    adduser -S appuser -u 1001 &amp;&amp; \
+    chown -R appuser:nodejs /app
+USER appuser
+
+# Expose application port
+EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD bun -e &quot;console.log('healthy')&quot; || exit 1
+
+# Entrypoint script for Infisical configuration
+COPY --chown=appuser:nodejs docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+ENTRYPOINT [&quot;docker-entrypoint.sh&quot;]
+CMD [&quot;infisical&quot;, &quot;run&quot;, &quot;--&quot;, &quot;bun&quot;, &quot;start&quot;]">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+
+                <article class="code-example">
+                    <h3 class="code-title">docker-entrypoint.sh</h3>
+                    <div class="code-block">
+                        <pre><code>#!/bin/sh
+set -e
+
+# Validate required environment variables
+if [ -z "$INFISICAL_TOKEN" ]; then
+    echo "Error: INFISICAL_TOKEN is required"
+    exit 1
+fi
+
+# Set default Infisical API URL if not provided
+export INFISICAL_API_URL=${INFISICAL_API_URL:-"https://app.infisical.com"}
+
+echo "Starting application with Infisical..."
+echo "API URL: $INFISICAL_API_URL"
+
+# Execute the provided command
+exec "$@"</code></pre>
+                        <button class="copy-btn" aria-label="Copy entrypoint script" data-clipboard-text="#!/bin/sh
+set -e
+
+# Validate required environment variables
+if [ -z &quot;$INFISICAL_TOKEN&quot; ]; then
+    echo &quot;Error: INFISICAL_TOKEN is required&quot;
+    exit 1
+fi
+
+# Set default Infisical API URL if not provided
+export INFISICAL_API_URL=${INFISICAL_API_URL:-&quot;https://app.infisical.com&quot;}
+
+echo &quot;Starting application with Infisical...&quot;
+echo &quot;API URL: $INFISICAL_API_URL&quot;
+
+# Execute the provided command
+exec &quot;$@&quot;">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+
+                <article class="code-example">
+                    <h3 class="code-title">docker-compose.yml</h3>
+                    <div class="code-block">
+                        <pre><code>version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - INFISICAL_TOKEN=${INFISICAL_TOKEN}
+      - INFISICAL_API_URL=${INFISICAL_API_URL:-https://app.infisical.com}
+      - INFISICAL_PROJECT_ID=${INFISICAL_PROJECT_ID}
+      - INFISICAL_ENVIRONMENT=${INFISICAL_ENVIRONMENT:-production}
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "bun", "-e", "console.log('healthy')"]
+      interval: 30s
+      timeout: 3s
+      retries: 3</code></pre>
+                        <button class="copy-btn" aria-label="Copy docker-compose configuration" data-clipboard-text="version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - INFISICAL_TOKEN=${INFISICAL_TOKEN}
+      - INFISICAL_API_URL=${INFISICAL_API_URL:-https://app.infisical.com}
+      - INFISICAL_PROJECT_ID=${INFISICAL_PROJECT_ID}
+      - INFISICAL_ENVIRONMENT=${INFISICAL_ENVIRONMENT:-production}
+    ports:
+      - &quot;3000:3000&quot;
+    restart: unless-stopped
+    healthcheck:
+      test: [&quot;CMD&quot;, &quot;bun&quot;, &quot;-e&quot;, &quot;console.log('healthy')&quot;]
+      interval: 30s
+      timeout: 3s
+      retries: 3">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section id="best-practices" class="example-section" aria-labelledby="practices-title">
+            <div class="container">
+                <h2 id="practices-title" class="section-title">Dockerfile Best Practices</h2>
+                <p class="section-intro">
+                    Follow these recommendations to create secure, efficient, and maintainable Docker images.
+                </p>
+
+                <div class="practices-grid">
+                    <article class="practice-card">
+                        <h3 class="practice-title">Layer Caching</h3>
+                        <p>Order commands from least to most frequently changing. Copy package files before source code.</p>
+                        <div class="code-block code-block-small">
+                            <pre><code># Good - package files cached separately
+COPY package.json bun.lockb ./
+RUN bun install
+COPY . .</code></pre>
+                        </div>
+                    </article>
+
+                    <article class="practice-card">
+                        <h3 class="practice-title">Security</h3>
+                        <p>Run containers as non-root users. Use the least privileged user necessary.</p>
+                        <div class="code-block code-block-small">
+                            <pre><code>RUN adduser -S appuser -u 1001
+USER appuser</code></pre>
+                        </div>
+                    </article>
+
+                    <article class="practice-card">
+                        <h3 class="practice-title">Image Size</h3>
+                        <p>Use multi-stage builds and install only production dependencies.</p>
+                        <div class="code-block code-block-small">
+                            <pre><code>RUN bun install --production</code></pre>
+                        </div>
+                    </article>
+
+                    <article class="practice-card">
+                        <h3 class="practice-title">Health Checks</h3>
+                        <p>Define HEALTHCHECK instructions for container orchestrators.</p>
+                        <div class="code-block code-block-small">
+                            <pre><code>HEALTHCHECK --interval=30s \
+    CMD bun -e "console.log('ok')"</code></pre>
+                        </div>
+                    </article>
+
+                    <article class="practice-card">
+                        <h3 class="practice-title">Secrets Management</h3>
+                        <p>Never commit secrets. Use Infisical for runtime injection.</p>
+                        <div class="code-block code-block-small">
+                            <pre><code>CMD ["infisical", "run", "--", \
+     "bun", "start"]</code></pre>
+                        </div>
+                    </article>
+
+                    <article class="practice-card">
+                        <h3 class="practice-title">Specific Tags</h3>
+                        <p>Pin to specific image versions for reproducible builds.</p>
+                        <div class="code-block code-block-small">
+                            <pre><code>FROM sswork/bun-infisical:1.3.10-0.43.58</code></pre>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Reference -->
+        <section class="quick-ref-section" aria-labelledby="quickref-title">
+            <div class="container">
+                <h2 id="quickref-title" class="section-title">Quick Reference</h2>
+                
+                <div class="table-wrapper">
+                    <table class="data-table" role="table" aria-label="Dockerfile instructions quick reference">
+                        <thead>
+                            <tr>
+                                <th scope="col">Instruction</th>
+                                <th scope="col">Purpose</th>
+                                <th scope="col">Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>FROM</code></td>
+                                <td>Base image</td>
+                                <td><code>FROM sswork/bun-infisical:latest</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>WORKDIR</code></td>
+                                <td>Set working directory</td>
+                                <td><code>WORKDIR /app</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>COPY</code></td>
+                                <td>Copy files</td>
+                                <td><code>COPY package.json ./</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>RUN</code></td>
+                                <td>Execute commands</td>
+                                <td><code>RUN bun install</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>USER</code></td>
+                                <td>Set user</td>
+                                <td><code>USER appuser</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>EXPOSE</code></td>
+                                <td>Document ports</td>
+                                <td><code>EXPOSE 3000</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>CMD</code></td>
+                                <td>Default command</td>
+                                <td><code>CMD ["infisical", "run", "--", "bun", "start"]</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>HEALTHCHECK</code></td>
+                                <td>Container health</td>
+                                <td><code>HEALTHCHECK CMD bun -e "console.log('ok')"</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <section class="navigation-section" aria-labelledby="nav-title">
+            <div class="container">
+                <h2 id="nav-title" class="section-title">More Documentation</h2>
+                <nav class="doc-nav" aria-label="Documentation navigation">
+                    <ul class="doc-nav-list">
+                        <li>
+                            <a href="../usage/" class="doc-nav-link">
+                                <span class="doc-nav-icon" aria-hidden="true">📖</span>
+                                <div class="doc-nav-content">
+                                    <h3>Usage Guide</h3>
+                                    <p>Detailed instructions for running and configuring the image</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../examples/" class="doc-nav-link">
+                                <span class="doc-nav-icon" aria-hidden="true">💡</span>
+                                <div class="doc-nav-content">
+                                    <h3>Examples</h3>
+                                    <p>Real-world use cases and sample applications</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../ci-cd/" class="doc-nav-link">
+                                <span class="doc-nav-icon" aria-hidden="true">🔄</span>
+                                <div class="doc-nav-content">
+                                    <h3>CI/CD Integration</h3>
+                                    <p>GitHub Actions, GitLab CI, and other pipeline configurations</p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="../assets/images/logo.svg" alt="" width="32" height="32" aria-hidden="true">
+                    <span>Bun Infisical Docker</span>
+                </div>
+                <nav class="footer-nav" aria-label="Footer navigation">
+                    <ul>
+                        <li><a href="https://github.com/SSWork/bun-infisical" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                        <li><a href="https://hub.docker.com/r/sswork/bun-infisical" target="_blank" rel="noopener noreferrer">Docker Hub</a></li>
+                        <li><a href="https://bun.sh" target="_blank" rel="noopener noreferrer">Bun</a></li>
+                        <li><a href="https://infisical.com" target="_blank" rel="noopener noreferrer">Infisical</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SSWork. Released under the MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

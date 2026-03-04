@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker Compose | Bun + Infisical Docker Image</title>
+    <meta name="description" content="Complete Docker Compose examples for Bun + Infisical Docker image. Learn to configure services with secrets management, multi-service setups, and environment variables.">
+    <meta name="keywords" content="Docker Compose, Bun, Infisical, docker-compose.yml, secrets management, multi-service, container orchestration">
+    <meta name="author" content="SSWork">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://atssj.github.io/bun-infisical/docker-compose/">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+    
+    <meta property="og:title" content="Docker Compose | Bun + Infisical Docker Image">
+    <meta property="og:description" content="Complete Docker Compose examples for Bun + Infisical Docker image with secrets management.">
+    <meta property="og:image" content="https://atssj.github.io/bun-infisical/assets/images/og-image.png">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://atssj.github.io/bun-infisical/docker-compose/">
+    <meta property="og:site_name" content="Bun Infisical Docker">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Docker Compose | Bun + Infisical Docker Image">
+    <meta name="twitter:description" content="Complete Docker Compose examples for Bun + Infisical Docker image.">
+    <meta name="twitter:image" content="https://atssj.github.io/bun-infisical/assets/images/og-image.png">
+    
+    <meta name="theme-color" content="#3b82f6">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://atssj.github.io/bun-infisical/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Docker Compose",
+                "item": "https://atssj.github.io/bun-infisical/docker-compose/"
+            }
+        ]
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "Configure Docker Compose with Bun and Infisical",
+        "description": "Step-by-step guide to configuring Docker Compose for Bun applications with Infisical secrets management",
+        "totalTime": "PT10M",
+        "estimatedCost": {
+            "@type": "MonetaryAmount",
+            "currency": "USD",
+            "value": "0"
+        },
+        "supply": [
+            {
+                "@type": "HowToSupply",
+                "name": "Docker"
+            },
+            {
+                "@type": "HowToSupply",
+                "name": "Docker Compose"
+            },
+            {
+                "@type": "HowToSupply",
+                "name": "Infisical Token"
+            }
+        ],
+        "tool": [
+            {
+                "@type": "HowToTool",
+                "name": "Text Editor"
+            }
+        ],
+        "step": [
+            {
+                "@type": "HowToStep",
+                "position": 1,
+                "name": "Create Basic docker-compose.yml",
+                "text": "Create a basic docker-compose.yml file with the Bun + Infisical image",
+                "url": "https://atssj.github.io/bun-infisical/docker-compose/#basic-example"
+            },
+            {
+                "@type": "HowToStep",
+                "position": 2,
+                "name": "Add Infisical Authentication",
+                "text": "Configure INFISICAL_TOKEN for secure secrets access",
+                "url": "https://atssj.github.io/bun-infisical/docker-compose/#infisical-auth"
+            },
+            {
+                "@type": "HowToStep",
+                "position": 3,
+                "name": "Configure Environment Variables",
+                "text": "Set up environment variables from .env files",
+                "url": "https://atssj.github.io/bun-infisical/docker-compose/#env-variables"
+            },
+            {
+                "@type": "HowToStep",
+                "position": 4,
+                "name": "Create Multi-Service Setup",
+                "text": "Add database and additional services to your compose configuration",
+                "url": "https://atssj.github.io/bun-infisical/docker-compose/#multi-service"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header class="site-header" role="banner">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo" aria-label="Bun Infisical Docker - Home">
+                    <img src="../assets/images/logo.svg" alt="Bun Infisical Docker" width="40" height="40">
+                    <span class="logo-text">Bun Infisical</span>
+                </a>
+                
+                <nav class="main-nav" role="navigation" aria-label="Main navigation">
+                    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">
+                        <span class="nav-toggle-icon"></span>
+                    </button>
+                    <ul id="nav-menu" class="nav-menu" role="menubar">
+                        <li role="none"><a href="/" class="nav-link" role="menuitem">Home</a></li>
+                        <li role="none"><a href="/usage/" class="nav-link" role="menuitem">Usage Guide</a></li>
+                        <li role="none"><a href="/examples/" class="nav-link" role="menuitem">Examples</a></li>
+                        <li role="none"><a href="/ci-cd/" class="nav-link" role="menuitem">CI/CD</a></li>
+                        <li role="none"><a href="https://github.com/SSWork/bun-infisical" class="nav-link external" role="menuitem" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <div class="container">
+                <ol class="breadcrumb-list">
+                    <li class="breadcrumb-item">
+                        <a href="/">Home</a>
+                    </li>
+                    <li class="breadcrumb-item" aria-current="page">Docker Compose</li>
+                </ol>
+            </div>
+        </nav>
+
+        <section class="page-header" aria-labelledby="page-title">
+            <div class="container">
+                <h1 id="page-title" class="page-title">Docker Compose Configuration</h1>
+                <p class="page-description">
+                    Complete examples for running Bun + Infisical with Docker Compose. 
+                    From basic setups to multi-service configurations with databases.
+                </p>
+            </div>
+        </section>
+
+        <section class="content-section" id="basic-example" aria-labelledby="basic-title">
+            <div class="container">
+                <h2 id="basic-title" class="section-title">Basic docker-compose.yml</h2>
+                <p class="section-description">
+                    A minimal configuration to get started with the Bun + Infisical image.
+                    This example runs a simple Bun application without external dependencies.
+                </p>
+                
+                <article class="code-example">
+                    <div class="code-block">
+                        <pre><code class="language-yaml">version: '3.8'
+
+services:
+  app:
+    image: sswork/bun-infisical:latest
+    container_name: bun-app
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - "3000:3000"
+    command: bun run start</code></pre>
+                        <button class="copy-btn" aria-label="Copy basic compose configuration" data-clipboard-text="version: '3.8'
+
+services:
+  app:
+    image: sswork/bun-infisical:latest
+    container_name: bun-app
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - &quot;3000:3000&quot;
+    command: bun run start">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-section" id="infisical-auth" aria-labelledby="infisical-title">
+            <div class="container">
+                <h2 id="infisical-title" class="section-title">With Infisical Token Authentication</h2>
+                <p class="section-description">
+                    Configure your application to securely fetch secrets from Infisical at runtime.
+                    The <code>INFISICAL_TOKEN</code> is required for authentication.
+                </p>
+                
+                <article class="code-example">
+                    <div class="code-block">
+                        <pre><code class="language-yaml">version: '3.8'
+
+services:
+  app:
+    image: sswork/bun-infisical:latest
+    container_name: bun-app-secure
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - "3000:3000"
+    environment:
+      - INFISICAL_TOKEN=${INFISICAL_TOKEN}
+      - INFISICAL_API_URL=${INFISICAL_API_URL:-https://app.infisical.com}
+    command: infisical run -- bun start</code></pre>
+                        <button class="copy-btn" aria-label="Copy Infisical auth configuration" data-clipboard-text="version: '3.8'
+
+services:
+  app:
+    image: sswork/bun-infisical:latest
+    container_name: bun-app-secure
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - &quot;3000:3000&quot;
+    environment:
+      - INFISICAL_TOKEN=${INFISICAL_TOKEN}
+      - INFISICAL_API_URL=${INFISICAL_API_URL:-https://app.infisical.com}
+    command: infisical run -- bun start">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+                
+                <div class="info-box">
+                    <h3>Required Environment Variables</h3>
+                    <ul>
+                        <li><code>INFISICAL_TOKEN</code> - Your Infisical service token for authentication</li>
+                        <li><code>INFISICAL_API_URL</code> - Infisical API endpoint (optional, defaults to https://app.infisical.com)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="env-variables" aria-labelledby="env-title">
+            <div class="container">
+                <h2 id="env-title" class="section-title">With Environment Variables</h2>
+                <p class="section-description">
+                    Load environment variables from a <code>.env</code> file and combine them with Infisical secrets.
+                    This approach keeps sensitive configuration out of your compose file.
+                </p>
+                
+                <article class="code-example">
+                    <div class="code-block">
+                        <pre><code class="language-yaml">version: '3.8'
+
+services:
+  app:
+    image: sswork/bun-infisical:latest
+    container_name: bun-app-env
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - INFISICAL_TOKEN=${INFISICAL_TOKEN}
+    command: infisical run -- bun start</code></pre>
+                        <button class="copy-btn" aria-label="Copy environment variables configuration" data-clipboard-text="version: '3.8'
+
+services:
+  app:
+    image: sswork/bun-infisical:latest
+    container_name: bun-app-env
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - &quot;3000:3000&quot;
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - INFISICAL_TOKEN=${INFISICAL_TOKEN}
+    command: infisical run -- bun start">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+                
+                <article class="code-example">
+                    <h3 class="code-title">Example .env File</h3>
+                    <div class="code-block">
+                        <pre><code class="language-bash"># Application
+NODE_ENV=production
+PORT=3000
+LOG_LEVEL=info
+
+# Infisical
+INFISICAL_TOKEN=your-service-token-here
+INFISICAL_API_URL=https://app.infisical.com
+
+# Database (if using external)
+DATABASE_URL=postgresql://user:pass@db:5432/myapp</code></pre>
+                        <button class="copy-btn" aria-label="Copy example env file" data-clipboard-text="# Application
+NODE_ENV=production
+PORT=3000
+LOG_LEVEL=info
+
+# Infisical
+INFISICAL_TOKEN=your-service-token-here
+INFISICAL_API_URL=https://app.infisical.com
+
+# Database (if using external)
+DATABASE_URL=postgresql://user:pass@db:5432/myapp">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-section" id="multi-service" aria-labelledby="multi-title">
+            <div class="container">
+                <h2 id="multi-title" class="section-title">Multi-Service Setup (App + Database)</h2>
+                <p class="section-description">
+                    A complete production-ready setup with a PostgreSQL database, Bun application,
+                    and persistent volumes. Includes health checks and proper service dependencies.
+                </p>
+                
+                <article class="code-example">
+                    <div class="code-block">
+                        <pre><code class="language-yaml">version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: app-database
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-appuser}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secretpassword}
+      POSTGRES_DB: ${DB_NAME:-myapp}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-appuser} -d ${DB_NAME:-myapp}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    image: sswork/bun-infisical:latest
+    container_name: bun-app-full
+    restart: unless-stopped
+    working_dir: /app
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./:/app
+      - node_modules:/app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://${DB_USER:-appuser}:${DB_PASSWORD:-secretpassword}@db:5432/${DB_NAME:-myapp}
+      - INFISICAL_TOKEN=${INFISICAL_TOKEN}
+      - INFISICAL_API_URL=${INFISICAL_API_URL:-https://app.infisical.com}
+    env_file:
+      - .env
+    command: infisical run -- bun start
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  postgres_data:
+    driver: local
+  node_modules:
+    driver: local</code></pre>
+                        <button class="copy-btn" aria-label="Copy multi-service configuration" data-clipboard-text="version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: app-database
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-appuser}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secretpassword}
+      POSTGRES_DB: ${DB_NAME:-myapp}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - &quot;5432:5432&quot;
+    healthcheck:
+      test: [&quot;CMD-SHELL&quot;, &quot;pg_isready -U ${DB_USER:-appuser} -d ${DB_NAME:-myapp}&quot;]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    image: sswork/bun-infisical:latest
+    container_name: bun-app-full
+    restart: unless-stopped
+    working_dir: /app
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./:/app
+      - node_modules:/app/node_modules
+    ports:
+      - &quot;3000:3000&quot;
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://${DB_USER:-appuser}:${DB_PASSWORD:-secretpassword}@db:5432/${DB_NAME:-myapp}
+      - INFISICAL_TOKEN=${INFISICAL_TOKEN}
+      - INFISICAL_API_URL=${INFISICAL_API_URL:-https://app.infisical.com}
+    env_file:
+      - .env
+    command: infisical run -- bun start
+    healthcheck:
+      test: [&quot;CMD&quot;, &quot;wget&quot;, &quot;-q&quot;, &quot;--spider&quot;, &quot;http://localhost:3000/health&quot;]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  postgres_data:
+    driver: local
+  node_modules:
+    driver: local">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+                
+                <div class="info-box info-box-tip">
+                    <h3>Running Multi-Service Setup</h3>
+                    <pre><code class="language-bash"># Start all services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f app
+
+# Stop all services
+docker-compose down
+
+# Stop and remove volumes
+docker-compose down -v</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" aria-labelledby="commands-title">
+            <div class="container">
+                <h2 id="commands-title" class="section-title">Common Docker Compose Commands</h2>
+                <div class="table-wrapper">
+                    <table class="data-table" role="table" aria-label="Common Docker Compose commands">
+                        <thead>
+                            <tr role="row">
+                                <th scope="col" role="columnheader">Command</th>
+                                <th scope="col" role="columnheader">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr role="row">
+                                <td role="cell"><code>docker-compose up -d</code></td>
+                                <td role="cell">Start services in detached mode</td>
+                            </tr>
+                            <tr role="row">
+                                <td role="cell"><code>docker-compose down</code></td>
+                                <td role="cell">Stop and remove containers</td>
+                            </tr>
+                            <tr role="row">
+                                <td role="cell"><code>docker-compose logs -f</code></td>
+                                <td role="cell">Follow log output</td>
+                            </tr>
+                            <tr role="row">
+                                <td role="cell"><code>docker-compose ps</code></td>
+                                <td role="cell">List running containers</td>
+                            </tr>
+                            <tr role="row">
+                                <td role="cell"><code>docker-compose exec app sh</code></td>
+                                <td role="cell">Open shell in app container</td>
+                            </tr>
+                            <tr role="row">
+                                <td role="cell"><code>docker-compose restart app</code></td>
+                                <td role="cell">Restart specific service</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="navigation-section" aria-labelledby="related-title">
+            <div class="container">
+                <h2 id="related-title" class="section-title">Related Documentation</h2>
+                <nav class="doc-nav" aria-label="Related documentation">
+                    <ul class="doc-nav-list">
+                        <li>
+                            <a href="/usage/" class="doc-nav-link">
+                                <span class="doc-nav-icon" aria-hidden="true">📖</span>
+                                <div class="doc-nav-content">
+                                    <h3>Usage Guide</h3>
+                                    <p>Detailed usage instructions and configuration options</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/examples/" class="doc-nav-link">
+                                <span class="doc-nav-icon" aria-hidden="true">💡</span>
+                                <div class="doc-nav-content">
+                                    <h3>Examples</h3>
+                                    <p>Real-world application examples and use cases</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/ci-cd/" class="doc-nav-link">
+                                <span class="doc-nav-icon" aria-hidden="true">🔄</span>
+                                <div class="doc-nav-content">
+                                    <h3>CI/CD Integration</h3>
+                                    <p>Automated deployment with GitHub Actions and more</p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="../assets/images/logo.svg" alt="" width="32" height="32" aria-hidden="true">
+                    <span>Bun Infisical Docker</span>
+                </div>
+                <nav class="footer-nav" aria-label="Footer navigation">
+                    <ul>
+                        <li><a href="https://github.com/SSWork/bun-infisical" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                        <li><a href="https://hub.docker.com/r/sswork/bun-infisical" target="_blank" rel="noopener noreferrer">Docker Hub</a></li>
+                        <li><a href="https://bun.sh" target="_blank" rel="noopener noreferrer">Bun</a></li>
+                        <li><a href="https://infisical.com" target="_blank" rel="noopener noreferrer">Infisical</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SSWork. Released under the MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

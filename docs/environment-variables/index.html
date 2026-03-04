@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environment Variables | Bun + Infisical Docker Image</title>
+    <meta name="description" content="Complete reference guide for environment variables used with the Bun + Infisical Docker image. Learn about INFISICAL_TOKEN, INFISICAL_API_URL, and security best practices.">
+    <meta name="keywords" content="Bun, Infisical, Docker, environment variables, INFISICAL_TOKEN, INFISICAL_API_URL, secrets management, configuration">
+    <meta name="author" content="SSWork">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://atssj.github.io/bun-infisical/environment-variables/">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="Environment Variables | Bun + Infisical Docker Image">
+    <meta property="og:description" content="Complete reference guide for environment variables used with the Bun + Infisical Docker image.">
+    <meta property="og:image" content="https://atssj.github.io/bun-infisical/assets/images/og-image.png">
+    <meta property="og:image:alt" content="Bun + Infisical Docker Image Logo">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://atssj.github.io/bun-infisical/environment-variables/">
+    <meta property="og:site_name" content="Bun Infisical Docker">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Environment Variables | Bun + Infisical Docker Image">
+    <meta name="twitter:description" content="Complete reference guide for environment variables used with the Bun + Infisical Docker image.">
+    <meta name="twitter:image" content="https://atssj.github.io/bun-infisical/assets/images/og-image.png">
+    <meta name="twitter:image:alt" content="Bun + Infisical Docker Image Logo">
+    <meta name="twitter:creator" content="@sswork">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="msapplication-TileColor" content="#3b82f6">
+    
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "Environment Variables Reference",
+        "description": "Complete reference guide for environment variables used with the Bun + Infisical Docker image",
+        "url": "https://atssj.github.io/bun-infisical/environment-variables/",
+        "author": {
+            "@type": "Organization",
+            "name": "SSWork"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "SSWork"
+        },
+        "mainEntity": {
+            "@type": "Table",
+            "about": "Environment Variables Configuration"
+        }
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://atssj.github.io/bun-infisical/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Environment Variables",
+                "item": "https://atssj.github.io/bun-infisical/environment-variables/"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header class="site-header" role="banner">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo" aria-label="Bun Infisical Docker - Home">
+                    <img src="../assets/images/logo.svg" alt="Bun Infisical Docker" width="40" height="40">
+                    <span class="logo-text">Bun Infisical</span>
+                </a>
+                
+                <nav class="main-nav" role="navigation" aria-label="Main navigation">
+                    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">
+                        <span class="nav-toggle-icon"></span>
+                    </button>
+                    <ul id="nav-menu" class="nav-menu" role="menubar">
+                        <li role="none"><a href="/" class="nav-link" role="menuitem">Home</a></li>
+                        <li role="none"><a href="/usage/" class="nav-link" role="menuitem">Usage Guide</a></li>
+                        <li role="none"><a href="/examples/" class="nav-link" role="menuitem">Examples</a></li>
+                        <li role="none"><a href="/ci-cd/" class="nav-link" role="menuitem">CI/CD</a></li>
+                        <li role="none"><a href="https://github.com/SSWork/bun-infisical" class="nav-link external" role="menuitem" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <div class="container">
+                <ol class="breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                        <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+                        <meta itemprop="position" content="1">
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                        <span itemprop="name">Environment Variables</span>
+                        <meta itemprop="position" content="2">
+                    </li>
+                </ol>
+            </div>
+        </nav>
+
+        <section class="page-header" aria-labelledby="page-title">
+            <div class="container">
+                <h1 id="page-title" class="page-title">Environment Variables</h1>
+                <p class="page-description">
+                    Complete reference for configuring the Bun + Infisical Docker image. 
+                    Learn how to authenticate with Infisical and customize your deployment.
+                </p>
+            </div>
+        </section>
+
+        <section class="overview" aria-labelledby="overview-title">
+            <div class="container">
+                <h2 id="overview-title" class="section-title">Overview</h2>
+                <div class="content-block">
+                    <p>
+                        The Bun + Infisical Docker image uses environment variables for configuration and authentication. 
+                        These variables control how the Infisical CLI connects to your secrets backend and authenticates your application.
+                    </p>
+                    <div class="info-box">
+                        <h3>Required Setup</h3>
+                        <p>
+                            At minimum, you need an <strong>INFISICAL_TOKEN</strong> to authenticate with the Infisical API. 
+                            This token grants your container access to the secrets stored in your Infisical projects.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="variables-table" aria-labelledby="variables-title">
+            <div class="container">
+                <h2 id="variables-title" class="section-title">Environment Variable Reference</h2>
+                <div class="table-wrapper">
+                    <table class="data-table" role="table" aria-label="Environment variables reference">
+                        <thead>
+                            <tr role="row">
+                                <th scope="col" role="columnheader">Variable</th>
+                                <th scope="col" role="columnheader">Required</th>
+                                <th scope="col" role="columnheader">Default</th>
+                                <th scope="col" role="columnheader">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr role="row">
+                                <td role="cell"><code>INFISICAL_TOKEN</code></td>
+                                <td role="cell"><span class="tag required">Required</span></td>
+                                <td role="cell"><em>None</em></td>
+                                <td role="cell">
+                                    Your Infisical service token for authentication. 
+                                    This token is used to fetch secrets from your Infisical projects.
+                                    <a href="https://infisical.com/docs/documentation/platform/token" target="_blank" rel="noopener noreferrer">Learn more about service tokens</a>.
+                                </td>
+                            </tr>
+                            <tr role="row">
+                                <td role="cell"><code>INFISICAL_API_URL</code></td>
+                                <td role="cell"><span class="tag optional">Optional</span></td>
+                                <td role="cell"><code>https://app.infisical.com</code></td>
+                                <td role="cell">
+                                    Custom Infisical API URL for self-hosted instances. 
+                                    Use this when running your own Infisical server instead of the cloud service.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="usage-examples" aria-labelledby="examples-title">
+            <div class="container">
+                <h2 id="examples-title" class="section-title">Usage Examples</h2>
+                
+                <article class="example-section">
+                    <h3>Docker Run</h3>
+                    <p>Run a container with environment variables passed directly:</p>
+                    <div class="code-block">
+                        <pre><code>docker run -e INFISICAL_TOKEN=your-service-token \
+  -e INFISICAL_API_URL=https://app.infisical.com \
+  sswork/bun-infisical:latest \
+  infisical run -- bun your-app.js</code></pre>
+                        <button class="copy-btn" aria-label="Copy docker run command" data-clipboard-text="docker run -e INFISICAL_TOKEN=your-service-token -e INFISICAL_API_URL=https://app.infisical.com sswork/bun-infisical:latest infisical run -- bun your-app.js">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+
+                <article class="example-section">
+                    <h3>Docker Compose</h3>
+                    <p>Use a <code>.env</code> file with Docker Compose (recommended):</p>
+                    <div class="code-block">
+                        <pre><code># docker-compose.yml
+version: '3.8'
+services:
+  app:
+    image: sswork/bun-infisical:latest
+    env_file:
+      - .env
+    command: infisical run -- bun start</code></pre>
+                        <button class="copy-btn" aria-label="Copy docker compose configuration" data-clipboard-text="version: '3.8'
+services:
+  app:
+    image: sswork/bun-infisical:latest
+    env_file:
+      - .env
+    command: infisical run -- bun start">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                    <div class="code-block">
+                        <pre><code># .env
+INFISICAL_TOKEN=your-service-token
+INFISICAL_API_URL=https://app.infisical.com</code></pre>
+                        <button class="copy-btn" aria-label="Copy .env file content" data-clipboard-text="INFISICAL_TOKEN=your-service-token
+INFISICAL_API_URL=https://app.infisical.com">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+
+                <article class="example-section">
+                    <h3>Kubernetes</h3>
+                    <p>Deploy to Kubernetes using secrets:</p>
+                    <div class="code-block">
+                        <pre><code>apiVersion: v1
+kind: Secret
+metadata:
+  name: infisical-secret
+type: Opaque
+stringData:
+  INFISICAL_TOKEN: your-service-token
+  INFISICAL_API_URL: https://app.infisical.com
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bun-app
+spec:
+  template:
+    spec:
+      containers:
+      - name: app
+        image: sswork/bun-infisical:latest
+        envFrom:
+        - secretRef:
+            name: infisical-secret
+        command: ["infisical", "run", "--", "bun", "start"]</code></pre>
+                        <button class="copy-btn" aria-label="Copy Kubernetes manifest" data-clipboard-text="apiVersion: v1
+kind: Secret
+metadata:
+  name: infisical-secret
+type: Opaque
+stringData:
+  INFISICAL_TOKEN: your-service-token
+  INFISICAL_API_URL: https://app.infisical.com
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bun-app
+spec:
+  template:
+    spec:
+      containers:
+      - name: app
+        image: sswork/bun-infisical:latest
+        envFrom:
+        - secretRef:
+            name: infisical-secret
+        command: [&quot;infisical&quot;, &quot;run&quot;, &quot;--&quot;, &quot;bun&quot;, &quot;start&quot;]">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+
+                <article class="example-section">
+                    <h3>Self-Hosted Infisical</h3>
+                    <p>Connect to your own Infisical instance:</p>
+                    <div class="code-block">
+                        <pre><code>docker run -e INFISICAL_TOKEN=your-service-token \
+  -e INFISICAL_API_URL=https://infisical.your-company.com \
+  sswork/bun-infisical:latest \
+  infisical run -- bun your-app.js</code></pre>
+                        <button class="copy-btn" aria-label="Copy self-hosted example" data-clipboard-text="docker run -e INFISICAL_TOKEN=your-service-token -e INFISICAL_API_URL=https://infisical.your-company.com sswork/bun-infisical:latest infisical run -- bun your-app.js">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="security" aria-labelledby="security-title">
+            <div class="container">
+                <h2 id="security-title" class="section-title">Security Best Practices</h2>
+                
+                <div class="security-grid">
+                    <article class="security-card">
+                        <div class="security-icon" aria-hidden="true">🔒</div>
+                        <h3>Never Commit Tokens</h3>
+                        <p>
+                            Never commit your <code>INFISICAL_TOKEN</code> to version control. 
+                            Always use <code>.env</code> files (added to <code>.gitignore</code>) or secret management systems.
+                        </p>
+                    </article>
+                    
+                    <article class="security-card">
+                        <div class="security-icon" aria-hidden="true">📁</div>
+                        <h3>Use .env Files</h3>
+                        <p>
+                            Store environment variables in <code>.env</code> files during development. 
+                            Add <code>.env</code> to your <code>.gitignore</code> to prevent accidental commits.
+                        </p>
+                    </article>
+                    
+                    <article class="security-card">
+                        <div class="security-icon" aria-hidden="true">🔄</div>
+                        <h3>Rotate Tokens Regularly</h3>
+                        <p>
+                            Regularly rotate your Infisical service tokens. 
+                            This limits the impact of potential token leaks and follows security best practices.
+                        </p>
+                    </article>
+                    
+                    <article class="security-card">
+                        <div class="security-icon" aria-hidden="true">🛡️</div>
+                        <h3>Least Privilege</h3>
+                        <p>
+                            Create service tokens with the minimum required permissions. 
+                            Only grant access to the specific environments and secrets your application needs.
+                        </p>
+                    </article>
+                    
+                    <article class="security-card">
+                        <div class="security-icon" aria-hidden="true">🔍</div>
+                        <h3>Audit Access</h3>
+                        <p>
+                            Regularly review access logs in Infisical. 
+                            Monitor for unauthorized access attempts and unusual patterns.
+                        </p>
+                    </article>
+                    
+                    <article class="security-card">
+                        <div class="security-icon" aria-hidden="true">📡</div>
+                        <h3>Use HTTPS</h3>
+                        <p>
+                            Always use <code>https://</code> for <code>INFISICAL_API_URL</code>. 
+                            Never transmit tokens over unencrypted connections in production.
+                        </p>
+                    </article>
+                </div>
+
+                <div class="warning-box">
+                    <h3>⚠️ Important Security Notice</h3>
+                    <p>
+                        If you suspect your <code>INFISICAL_TOKEN</code> has been compromised, 
+                        <strong>revoke it immediately</strong> in your Infisical dashboard and generate a new one. 
+                        Update all deployed applications with the new token.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="next-steps" aria-labelledby="next-title">
+            <div class="container">
+                <h2 id="next-title" class="section-title">Next Steps</h2>
+                <nav class="doc-nav" aria-label="Related documentation">
+                    <ul class="doc-nav-list">
+                        <li>
+                            <a href="/usage/" class="doc-nav-link">
+                                <span class="doc-nav-icon" aria-hidden="true">📖</span>
+                                <div class="doc-nav-content">
+                                    <h3>Usage Guide</h3>
+                                    <p>Detailed instructions for running and configuring the image</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/examples/" class="doc-nav-link">
+                                <span class="doc-nav-icon" aria-hidden="true">💡</span>
+                                <div class="doc-nav-content">
+                                    <h3>Examples</h3>
+                                    <p>Real-world use cases and sample applications</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://infisical.com/docs" class="doc-nav-link" target="_blank" rel="noopener noreferrer">
+                                <span class="doc-nav-icon" aria-hidden="true">📚</span>
+                                <div class="doc-nav-content">
+                                    <h3>Infisical Docs</h3>
+                                    <p>Official Infisical documentation and guides</p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="../assets/images/logo.svg" alt="" width="32" height="32" aria-hidden="true">
+                    <span>Bun Infisical Docker</span>
+                </div>
+                <nav class="footer-nav" aria-label="Footer navigation">
+                    <ul>
+                        <li><a href="https://github.com/SSWork/bun-infisical" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                        <li><a href="https://hub.docker.com/r/sswork/bun-infisical" target="_blank" rel="noopener noreferrer">Docker Hub</a></li>
+                        <li><a href="https://bun.sh" target="_blank" rel="noopener noreferrer">Bun</a></li>
+                        <li><a href="https://infisical.com" target="_blank" rel="noopener noreferrer">Infisical</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SSWork. Released under the MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

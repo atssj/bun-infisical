@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started | Bun + Infisical Docker Image</title>
+    <meta name="description" content="Get started with the Bun + Infisical Docker image. Learn how to pull, verify, and run your first container with Bun 1.3.10 and Infisical CLI 0.43.58.">
+    <meta name="keywords" content="Bun Docker, Infisical Docker, getting started, Docker tutorial, secrets management, Bun 1.3.10, Infisical 0.43.58">
+    <meta name="author" content="SSWork">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://atssj.github.io/bun-infisical/getting-started/">
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="Getting Started | Bun + Infisical Docker Image">
+    <meta property="og:description" content="Get started with the Bun + Infisical Docker image. Learn how to pull, verify, and run your first container.">
+    <meta property="og:image" content="https://atssj.github.io/bun-infisical/assets/images/og-image.png">
+    <meta property="og:image:alt" content="Bun + Infisical Docker Image Logo">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://atssj.github.io/bun-infisical/getting-started/">
+    <meta property="og:site_name" content="Bun Infisical Docker">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Getting Started | Bun + Infisical Docker Image">
+    <meta name="twitter:description" content="Get started with the Bun + Infisical Docker image. Learn how to pull, verify, and run your first container.">
+    <meta name="twitter:image" content="https://atssj.github.io/bun-infisical/assets/images/og-image.png">
+    <meta name="twitter:image:alt" content="Bun + Infisical Docker Image Logo">
+    <meta name="twitter:creator" content="@sswork">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="msapplication-TileColor" content="#3b82f6">
+
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://atssj.github.io/bun-infisical/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Getting Started",
+                "item": "https://atssj.github.io/bun-infisical/getting-started/"
+            }
+        ]
+    }
+    </script>
+
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "Getting Started with Bun + Infisical Docker Image",
+        "description": "Complete step-by-step guide to install and run the Bun + Infisical Docker image. Learn how to pull the image (Bun 1.3.10 + Infisical 0.43.58), verify installation, and run your first container with secure secrets management.",
+        "image": "https://atssj.github.io/bun-infisical/assets/images/og-image.png",
+        "totalTime": "PT5M",
+        "estimatedCost": {
+            "@type": "MonetaryAmount",
+            "currency": "USD",
+            "value": "0"
+        },
+        "supply": [
+            {
+                "@type": "HowToSupply",
+                "name": "Docker installed on your system"
+            },
+            {
+                "@type": "HowToSupply",
+                "name": "Internet connection for pulling the image"
+            }
+        ],
+        "tool": [
+            {
+                "@type": "HowToTool",
+                "name": "Docker Engine 20.10+"
+            },
+            {
+                "@type": "HowToTool",
+                "name": "Terminal or Command Prompt"
+            }
+        ],
+        "step": [
+            {
+                "@type": "HowToStep",
+                "position": 1,
+                "name": "Verify Docker Installation",
+                "text": "Ensure Docker is installed and running on your system by running 'docker --version'. Docker Engine 20.10 or later is recommended for best compatibility.",
+                "url": "https://atssj.github.io/bun-infisical/getting-started/#prerequisites"
+            },
+            {
+                "@type": "HowToStep",
+                "position": 2,
+                "name": "Pull the Docker Image",
+                "text": "Pull the latest Bun + Infisical Docker image from Docker Hub using the command 'docker pull sswork/bun-infisical:latest'. This downloads the image containing Bun 1.3.10 and Infisical CLI 0.43.58.",
+                "url": "https://atssj.github.io/bun-infisical/getting-started/#pull-image"
+            },
+            {
+                "@type": "HowToStep",
+                "position": 3,
+                "name": "Verify Installation",
+                "text": "Check that Bun and Infisical are installed correctly by running version commands. Execute 'docker run -it sswork/bun-infisical:latest bun --version' to verify Bun 1.3.10, and 'docker run -it sswork/bun-infisical:latest infisical --version' to verify Infisical CLI 0.43.58.",
+                "url": "https://atssj.github.io/bun-infisical/getting-started/#verify-installation"
+            },
+            {
+                "@type": "HowToStep",
+                "position": 4,
+                "name": "Run Your First Container",
+                "text": "Start an interactive container and test both Bun and Infisical. Use 'docker run -it sswork/bun-infisical:latest sh' for an interactive shell, or mount your code with 'docker run -it -v $(pwd):/app -w /app sswork/bun-infisical:latest bun app.js' to run your application.",
+                "url": "https://atssj.github.io/bun-infisical/getting-started/#run-container"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header" role="banner">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo" aria-label="Bun Infisical Docker - Home">
+                    <img src="../assets/images/logo.svg" alt="Bun Infisical Docker" width="40" height="40">
+                    <span class="logo-text">Bun Infisical</span>
+                </a>
+
+                <nav class="main-nav" role="navigation" aria-label="Main navigation">
+                    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">
+                        <span class="nav-toggle-icon"></span>
+                    </button>
+                    <ul id="nav-menu" class="nav-menu" role="menubar">
+                        <li role="none"><a href="/" class="nav-link" role="menuitem">Home</a></li>
+                        <li role="none"><a href="/getting-started/" class="nav-link active" role="menuitem" aria-current="page">Getting Started</a></li>
+                        <li role="none"><a href="/usage/" class="nav-link" role="menuitem">Usage Guide</a></li>
+                        <li role="none"><a href="/examples/" class="nav-link" role="menuitem">Examples</a></li>
+                        <li role="none"><a href="/ci-cd/" class="nav-link" role="menuitem">CI/CD</a></li>
+                        <li role="none"><a href="https://github.com/SSWork/bun-infisical" class="nav-link external" role="menuitem" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <div class="container">
+                <ol class="breadcrumb-list">
+                    <li><a href="/">Home</a></li>
+                    <li aria-current="page">Getting Started</li>
+                </ol>
+            </div>
+        </nav>
+
+        <section class="hero hero-small" aria-labelledby="page-title">
+            <div class="container">
+                <h1 id="page-title" class="hero-title">Getting Started</h1>
+                <p class="hero-subtitle">Quick setup guide for Bun + Infisical Docker image</p>
+            </div>
+        </section>
+
+        <section class="content-section" id="prerequisites" aria-labelledby="prereq-title">
+            <div class="container">
+                <h2 id="prereq-title" class="section-title">Prerequisites</h2>
+                <div class="prereq-card">
+                    <div class="prereq-icon" aria-hidden="true">🐳</div>
+                    <div class="prereq-content">
+                        <h3>Docker Installed</h3>
+                        <p>You need Docker installed and running on your system. The image supports Docker Engine 20.10+ and Docker Desktop 4.0+.</p>
+                        <a href="https://docs.docker.com/get-docker/" class="btn btn-secondary btn-small" target="_blank" rel="noopener noreferrer">Install Docker</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="pull-image" aria-labelledby="pull-title">
+            <div class="container">
+                <h2 id="pull-title" class="section-title">Pull the Image</h2>
+                <p>Download the latest version of the Bun + Infisical Docker image from Docker Hub.</p>
+
+                <article class="code-example">
+                    <h3 class="code-title">Pull the latest image</h3>
+                    <div class="code-block">
+                        <pre><code>docker pull sswork/bun-infisical:latest</code></pre>
+                        <button class="copy-btn" aria-label="Copy pull command" data-clipboard-text="docker pull sswork/bun-infisical:latest">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+
+                <article class="code-example">
+                    <h3 class="code-title">Pull a specific version</h3>
+                    <div class="code-block">
+                        <pre><code>docker pull sswork/bun-infisical:1.3.10-0.43.58</code></pre>
+                        <button class="copy-btn" aria-label="Copy version-specific pull command" data-clipboard-text="docker pull sswork/bun-infisical:1.3.10-0.43.58">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-section" id="verify-installation" aria-labelledby="verify-title">
+            <div class="container">
+                <h2 id="verify-title" class="section-title">Verify Installation</h2>
+                <p>Run these commands to verify that Bun and Infisical are installed correctly in the image.</p>
+
+                <article class="code-example">
+                    <h3 class="code-title">Check Bun version</h3>
+                    <div class="code-block">
+                        <pre><code>docker run -it sswork/bun-infisical:latest bun --version</code></pre>
+                        <button class="copy-btn" aria-label="Copy Bun version command" data-clipboard-text="docker run -it sswork/bun-infisical:latest bun --version">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                    <p class="code-output">Expected output: <code>1.3.10</code></p>
+                </article>
+
+                <article class="code-example">
+                    <h3 class="code-title">Check Infisical version</h3>
+                    <div class="code-block">
+                        <pre><code>docker run -it sswork/bun-infisical:latest infisical --version</code></pre>
+                        <button class="copy-btn" aria-label="Copy Infisical version command" data-clipboard-text="docker run -it sswork/bun-infisical:latest infisical --version">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                    <p class="code-output">Expected output: <code>0.43.58</code></p>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-section" id="run-container" aria-labelledby="run-title">
+            <div class="container">
+                <h2 id="run-title" class="section-title">Run Your First Container</h2>
+                <p>Start an interactive container and test both Bun and Infisical.</p>
+
+                <article class="code-example">
+                    <h3 class="code-title">Run interactive shell</h3>
+                    <div class="code-block">
+                        <pre><code>docker run -it sswork/bun-infisical:latest sh</code></pre>
+                        <button class="copy-btn" aria-label="Copy interactive shell command" data-clipboard-text="docker run -it sswork/bun-infisical:latest sh">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+
+                <article class="code-example">
+                    <h3 class="code-title">Run a simple Bun script</h3>
+                    <div class="code-block">
+                        <pre><code>docker run sswork/bun-infisical:latest \
+  bun -e "console.log('Hello from Bun!')"</code></pre>
+                        <button class="copy-btn" aria-label="Copy Bun script command" data-clipboard-text="docker run sswork/bun-infisical:latest bun -e &quot;console.log('Hello from Bun!')&quot;">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+
+                <article class="code-example">
+                    <h3 class="code-title">Run with mounted volume</h3>
+                    <div class="code-block">
+                        <pre><code>docker run -it -v $(pwd):/app -w /app sswork/bun-infisical:latest bun app.js</code></pre>
+                        <button class="copy-btn" aria-label="Copy volume mount command" data-clipboard-text="docker run -it -v $(pwd):/app -w /app sswork/bun-infisical:latest bun app.js">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                    <p class="code-note">Mounts current directory to /app and sets it as working directory</p>
+                </article>
+
+                <article class="code-example">
+                    <h3 class="code-title">Run with Infisical (requires token)</h3>
+                    <div class="code-block">
+                        <pre><code>docker run -e INFISICAL_TOKEN=your-token \
+  -v $(pwd):/app -w /app \
+  sswork/bun-infisical:latest \
+  infisical run -- bun your-app.js</code></pre>
+                        <button class="copy-btn" aria-label="Copy Infisical run command" data-clipboard-text="docker run -e INFISICAL_TOKEN=your-token -v $(pwd):/app -w /app sswork/bun-infisical:latest infisical run -- bun your-app.js">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                    <p class="code-note">Injects secrets from Infisical before running your application</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-section next-steps" aria-labelledby="next-steps-title">
+            <div class="container">
+                <h2 id="next-steps-title" class="section-title">Next Steps</h2>
+                <p>Now that you have the image running, explore these resources to get the most out of Bun + Infisical.</p>
+
+                <nav class="doc-nav" aria-label="Next steps navigation">
+                    <ul class="doc-nav-list">
+                        <li>
+                            <a href="/usage/" class="doc-nav-link">
+                                <span class="doc-nav-icon" aria-hidden="true">📖</span>
+                                <div class="doc-nav-content">
+                                    <h3>Usage Guide</h3>
+                                    <p>Learn advanced configuration options and environment variables</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/examples/" class="doc-nav-link">
+                                <span class="doc-nav-icon" aria-hidden="true">💡</span>
+                                <div class="doc-nav-content">
+                                    <h3>Examples</h3>
+                                    <p>See real-world applications using Bun + Infisical</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/ci-cd/" class="doc-nav-link">
+                                <span class="doc-nav-icon" aria-hidden="true">🔄</span>
+                                <div class="doc-nav-content">
+                                    <h3>CI/CD Integration</h3>
+                                    <p>Set up automated deployments with GitHub Actions and GitLab CI</p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="../assets/images/logo.svg" alt="" width="32" height="32" aria-hidden="true">
+                    <span>Bun Infisical Docker</span>
+                </div>
+                <nav class="footer-nav" aria-label="Footer navigation">
+                    <ul>
+                        <li><a href="https://github.com/SSWork/bun-infisical" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                        <li><a href="https://hub.docker.com/r/sswork/bun-infisical" target="_blank" rel="noopener noreferrer">Docker Hub</a></li>
+                        <li><a href="https://bun.sh" target="_blank" rel="noopener noreferrer">Bun</a></li>
+                        <li><a href="https://infisical.com" target="_blank" rel="noopener noreferrer">Infisical</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SSWork. Released under the MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

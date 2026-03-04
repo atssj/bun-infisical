@@ -1,0 +1,127 @@
+# llms.txt - Bun Infisical Docker Image Documentation
+# https://llmstxt.org/ - Standard for LLM crawlers
+
+# Website Description
+## Bun Infisical Docker Image
+
+A Docker image combining the Bun JavaScript runtime with the Infisical secrets management CLI. This image enables developers to run Bun applications with integrated secrets management, allowing secure injection of environment variables at runtime without storing secrets in the image or repository.
+
+Built on Alpine Linux for a minimal footprint with both Bun (ultra-fast JavaScript runtime) and Infisical (open-source secrets manager) pre-installed.
+
+---
+
+# Site Structure
+
+## Home
+- URL: /
+- Description: Overview of the Bun Infisical Docker image, key features, quick start guide, and basic usage examples
+
+## Getting Started
+- URL: /getting-started/
+- Description: Step-by-step installation guide, prerequisites, pulling the image, and running your first container with Infisical secrets injection
+
+## Dockerfile Examples
+- URL: /dockerfile-examples/
+- Description: Common Dockerfile patterns including single-stage builds, multi-stage builds, production optimizations, and development configurations
+
+## Docker Compose
+- URL: /docker-compose/
+- Description: Docker Compose configurations for local development, production deployments, service orchestration, and integration with other services
+
+## Environment Variables
+- URL: /environment-variables/
+- Description: Complete reference for all environment variables supported by Infisical CLI, configuration options, and authentication methods
+
+## FAQ
+- URL: /faq/
+- Description: Frequently asked questions covering common issues, troubleshooting, best practices, and integration scenarios
+
+---
+
+# Key Facts
+
+## Docker Image Details
+- Name: ghcr.io/khulnasoft/bun-infisical
+- Base: Alpine Linux 3.20
+- Bun Version: 1.3.10
+- Infisical Version: 0.43.58
+- Architecture: linux/amd64, linux/arm64
+- Image Size: ~85MB compressed
+
+## Available Tags
+- latest - Always points to the most recent stable release
+- 1.3.10-0.43.58 - Specific version combination (Bun-Infisical)
+- 1.3 - Tracks latest Bun 1.3.x with latest Infisical
+- 1 - Tracks latest Bun 1.x with latest Infisical
+
+## Core Components
+- Bun 1.3.10 - Fast JavaScript runtime, bundler, test runner, and package manager
+- Infisical CLI 0.43.58 - CLI tool for fetching and injecting secrets from Infisical
+- Alpine Linux 3.20 - Minimal base image for security and size
+
+## Key Use Cases
+- Running Bun applications with secrets injected at runtime
+- CI/CD pipelines requiring secure environment variable management
+- Multi-environment deployments (dev, staging, production)
+- Migrating from Node.js to Bun with secrets management
+
+---
+
+# Content Format Guidelines
+
+## Document Structure
+- Primary content is HTML5 with semantic markup
+- Navigation uses `<nav>` elements with `aria-label` attributes
+- Main content wrapped in `<main>` with `id="main-content"`
+- Code examples use `<pre><code class="language-{lang}">` format
+
+## Code Blocks
+- Shell commands: `language-bash` or `language-shell`
+- Dockerfiles: `language-dockerfile`
+- YAML (Compose): `language-yaml`
+- JavaScript: `language-javascript`
+- TypeScript: `language-typescript`
+- JSON: `language-json`
+- Environment files: `language-env` or `language-dotenv`
+
+## Metadata Available
+- Page titles in `<title>` tags
+- Descriptions in `<meta name="description">` tags
+- Open Graph metadata for social sharing
+- Canonical URLs in `<link rel="canonical">`
+
+## Navigation Patterns
+- Breadcrumb navigation available on all pages except home
+- Table of contents on long-form documentation pages
+- Next/previous links at bottom of documentation pages
+- Sidebar navigation with nested sections
+
+---
+
+# Updates and Maintenance
+
+## Last Updated
+- llms.txt: 2026-03-04
+
+## Version History
+- Initial version: 2026-03-04
+
+## Contact
+- Repository: https://github.com/khulnasoft/bun-infisical
+- Issues: https://github.com/khulnasoft/bun-infisical/issues
+
+---
+
+# Crawler Hints
+
+## Priority Content
+The following paths contain the most critical information for understanding this project:
+1. /getting-started/ - Essential for new users
+2. /dockerfile-examples/ - Core usage patterns
+3. /environment-variables/ - Configuration reference
+
+## Dynamic Content
+No JavaScript-required content; all documentation is static HTML generated at build time.
+
+## Update Frequency
+Documentation is updated with each release. Check the GitHub releases page for the latest versions.

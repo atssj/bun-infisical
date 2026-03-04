@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OG Image Generator - Bun + Infisical</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #1a1a2e;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .instructions {
+            color: #fff;
+            margin-bottom: 20px;
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .instructions h2 {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .instructions p {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #fbf0df 0%, #5a4fcf 100%);
+            color: #1a1a2e;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(90, 79, 207, 0.4);
+        }
+
+        .btn-secondary {
+            background: #2a2a3e;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background: #3a3a4e;
+        }
+
+        #og-container {
+            width: 1200px;
+            height: 630px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        /* OG Image Styles */
+        .og-image {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: linear-gradient(135deg, #fbf0df 0%, #5a4fcf 100%);
+            overflow: hidden;
+        }
+
+        /* Dot pattern overlay */
+        .og-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(circle, #5a4fcf 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.08;
+            pointer-events: none;
+        }
+
+        /* Decorative circles - top left */
+        .deco-circle-tl-1 {
+            position: absolute;
+            top: -40px;
+            left: -40px;
+            width: 240px;
+            height: 240px;
+            background: #5a4fcf;
+            border-radius: 50%;
+            opacity: 0.15;
+        }
+
+        .deco-circle-tl-2 {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 120px;
+            height: 120px;
+            background: #fbf0df;
+            border-radius: 50%;
+            opacity: 0.15;
+        }
+
+        /* Decorative circles - bottom right */
+        .deco-circle-br-1 {
+            position: absolute;
+            bottom: -90px;
+            right: -30px;
+            width: 360px;
+            height: 360px;
+            background: #fbf0df;
+            border-radius: 50%;
+            opacity: 0.12;
+        }
+
+        .deco-circle-br-2 {
+            position: absolute;
+            bottom: -40px;
+            right: -20px;
+            width: 180px;
+            height: 180px;
+            background: #5a4fcf;
+            border-radius: 50%;
+            opacity: 0.12;
+        }
+
+        /* Speed lines - left side */
+        .speed-lines-left {
+            position: absolute;
+            left: 120px;
+            top: 250px;
+            opacity: 0.2;
+        }
+
+        .speed-line {
+            height: 3px;
+            background: #5a4fcf;
+            border-radius: 2px;
+            margin-bottom: 15px;
+        }
+
+        .speed-line:nth-child(1) { width: 150px; height: 3px; }
+        .speed-line:nth-child(2) { width: 160px; height: 2px; margin-left: -30px; }
+        .speed-line:nth-child(3) { width: 150px; height: 2.5px; margin-left: 20px; }
+        .speed-line:nth-child(4) { width: 120px; height: 1.5px; margin-left: -10px; }
+        .speed-line:nth-child(5) { width: 110px; height: 2px; margin-left: 30px; }
+
+        /* Speed lines - right side */
+        .speed-lines-right {
+            position: absolute;
+            right: 120px;
+            top: 250px;
+            opacity: 0.15;
+        }
+
+        .speed-line-r {
+            height: 3px;
+            background: #fbf0df;
+            border-radius: 2px;
+            margin-bottom: 20px;
+        }
+
+        .speed-line-r:nth-child(1) { width: 150px; height: 3px; margin-left: -20px; }
+        .speed-line-r:nth-child(2) { width: 160px; height: 2px; }
+        .speed-line-r:nth-child(3) { width: 160px; height: 2.5px; margin-left: 40px; }
+
+        /* Docker container representation */
+        .docker-container {
+            position: absolute;
+            left: 180px;
+            bottom: 150px;
+            opacity: 0.25;
+        }
+
+        .container-base {
+            width: 100px;
+            height: 60px;
+            background: #5a4fcf;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .container-blocks {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: grid;
+            grid-template-columns: repeat(3, 20px);
+            grid-template-rows: repeat(2, 15px);
+            gap: 5px;
+        }
+
+        .container-block {
+            background: #fbf0df;
+            border-radius: 2px;
+            opacity: 0.6;
+        }
+
+        /* Shield/Security icon */
+        .shield {
+            position: absolute;
+            right: 190px;
+            bottom: 150px;
+            opacity: 0.2;
+        }
+
+        .shield-outer {
+            width: 80px;
+            height: 90px;
+            background: #1a1a2e;
+            clip-path: polygon(50% 0%, 100% 20%, 100% 60%, 50% 100%, 0% 60%, 0% 20%);
+        }
+
+        .shield-inner {
+            position: absolute;
+            top: 15px;
+            left: 12px;
+            width: 56px;
+            height: 60px;
+            background: #5a4fcf;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 62.5%, 50% 100%, 0% 62.5%, 0% 25%);
+        }
+
+        /* Bun-inspired accent circles */
+        .bun-accents {
+            position: absolute;
+            left: 265px;
+            top: 175px;
+            opacity: 0.3;
+        }
+
+        .bun-accent {
+            background: #f5d69a;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .bun-accent:nth-child(1) { width: 30px; height: 16px; top: 0; left: 0; }
+        .bun-accent:nth-child(2) { width: 24px; height: 12px; top: -10px; left: 40px; }
+        .bun-accent:nth-child(3) { width: 20px; height: 10px; top: -20px; left: 20px; }
+
+        /* Connection line */
+        .connection-line {
+            position: absolute;
+            top: 280px;
+            left: 520px;
+            width: 160px;
+            height: 2px;
+            background: repeating-linear-gradient(90deg, #5a4fcf 0px, #5a4fcf 8px, transparent 8px, transparent 12px);
+            opacity: 0.4;
+        }
+
+        .connection-dot {
+            position: absolute;
+            top: 272px;
+            left: 592px;
+            width: 16px;
+            height: 16px;
+            background: #5a4fcf;
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+
+        .connection-dot::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 8px;
+            height: 8px;
+            background: #fbf0df;
+            border-radius: 50%;
+        }
+
+        /* Main content */
+        .main-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            filter: drop-shadow(0 4px 6px rgba(26, 26, 46, 0.15));
+        }
+
+        .main-title {
+            font-size: 72px;
+            font-weight: 800;
+            color: #1a1a2e;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 32px;
+            font-weight: 600;
+            color: #5a4fcf;
+            letter-spacing: 2px;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .tagline-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .tagline-line {
+            width: 80px;
+            height: 1.5px;
+            background: #1a1a2e;
+            opacity: 0.3;
+        }
+
+        .tagline {
+            font-size: 22px;
+            font-weight: 500;
+            color: #1a1a2e;
+            opacity: 0.8;
+        }
+
+        /* Bottom accent bar */
+        .bottom-bar {
+            position: absolute;
+            bottom: 146px;
+            left: 350px;
+            width: 500px;
+            height: 4px;
+            background: #5a4fcf;
+            border-radius: 2px;
+            opacity: 0.3;
+        }
+
+        /* Corner accents */
+        .corner-tl {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            width: 50px;
+            height: 50px;
+            border-top: 3px solid #5a4fcf;
+            border-left: 3px solid #5a4fcf;
+            opacity: 0.2;
+        }
+
+        .corner-br {
+            position: absolute;
+            bottom: 50px;
+            right: 50px;
+            width: 50px;
+            height: 50px;
+            border-bottom: 3px solid #5a4fcf;
+            border-right: 3px solid #5a4fcf;
+            opacity: 0.2;
+        }
+
+        /* Grid pattern overlay */
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            opacity: 0.03;
+        }
+
+        .grid-line-h {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #1a1a2e;
+        }
+
+        .grid-line-v {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: #1a1a2e;
+        }
+    </style>
+</head>
+<body>
+    <div class="instructions">
+        <h2>OG Image Generator</h2>
+        <p>This tool generates the Open Graph image for Bun + Infisical Docker Image. Click "Download as PNG" to save the 1200x630 image for social sharing.</p>
+    </div>
+
+    <div class="button-group">
+        <button class="btn btn-primary" onclick="downloadPNG()">Download as PNG</button>
+        <button class="btn btn-secondary" onclick="copyToClipboard()">Copy to Clipboard</button>
+    </div>
+
+    <div id="og-container">
+        <div class="og-image">
+            <!-- Decorative circles - top left -->
+            <div class="deco-circle-tl-1"></div>
+            <div class="deco-circle-tl-2"></div>
+
+            <!-- Decorative circles - bottom right -->
+            <div class="deco-circle-br-1"></div>
+            <div class="deco-circle-br-2"></div>
+
+            <!-- Speed lines - left -->
+            <div class="speed-lines-left">
+                <div class="speed-line"></div>
+                <div class="speed-line"></div>
+                <div class="speed-line"></div>
+                <div class="speed-line"></div>
+                <div class="speed-line"></div>
+            </div>
+
+            <!-- Speed lines - right -->
+            <div class="speed-lines-right">
+                <div class="speed-line-r"></div>
+                <div class="speed-line-r"></div>
+                <div class="speed-line-r"></div>
+            </div>
+
+            <!-- Docker container -->
+            <div class="docker-container">
+                <div class="container-base">
+                    <div class="container-blocks">
+                        <div class="container-block"></div>
+                        <div class="container-block"></div>
+                        <div class="container-block"></div>
+                        <div class="container-block"></div>
+                        <div class="container-block"></div>
+                        <div class="container-block"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shield -->
+            <div class="shield">
+                <div class="shield-outer">
+                    <div class="shield-inner"></div>
+                </div>
+            </div>
+
+            <!-- Bun accents -->
+            <div class="bun-accents">
+                <div class="bun-accent"></div>
+                <div class="bun-accent"></div>
+                <div class="bun-accent"></div>
+            </div>
+
+            <!-- Connection line -->
+            <div class="connection-line"></div>
+            <div class="connection-dot"></div>
+
+            <!-- Main content -->
+            <div class="main-content">
+                <h1 class="main-title">Bun + Infisical</h1>
+                <p class="subtitle">Docker Image</p>
+                <div class="tagline-wrapper">
+                    <div class="tagline-line"></div>
+                    <p class="tagline">Fast Runtime · Secure Secrets</p>
+                    <div class="tagline-line"></div>
+                </div>
+            </div>
+
+            <!-- Bottom bar -->
+            <div class="bottom-bar"></div>
+
+            <!-- Corner accents -->
+            <div class="corner-tl"></div>
+            <div class="corner-br"></div>
+
+            <!-- Grid overlay -->
+            <div class="grid-overlay">
+                <div class="grid-line-h" style="top: 157px;"></div>
+                <div class="grid-line-h" style="top: 315px;"></div>
+                <div class="grid-line-h" style="top: 472px;"></div>
+                <div class="grid-line-v" style="left: 300px;"></div>
+                <div class="grid-line-v" style="left: 600px;"></div>
+                <div class="grid-line-v" style="left: 900px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function downloadPNG() {
+            const container = document.getElementById('og-container');
+            
+            html2canvas(container, {
+                scale: 1,
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: null,
+                logging: false
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'og-image.png';
+                link.href = canvas.toDataURL('image/png', 1.0);
+                link.click();
+            }).catch(err => {
+                console.error('Error generating image:', err);
+                alert('Error generating image. Please try using browser dev tools to take a screenshot instead.');
+            });
+        }
+
+        async function copyToClipboard() {
+            const container = document.getElementById('og-container');
+            
+            try {
+                const canvas = await html2canvas(container, {
+                    scale: 1,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: null,
+                    logging: false
+                });
+
+                canvas.toBlob(async (blob) => {
+                    try {
+                        await navigator.clipboard.write([
+                            new ClipboardItem({ 'image/png': blob })
+                        ]);
+                        alert('Image copied to clipboard!');
+                    } catch (err) {
+                        console.error('Clipboard API error:', err);
+                        alert('Could not copy to clipboard. Please use the Download button instead.');
+                    }
+                }, 'image/png');
+            } catch (err) {
+                console.error('Error generating image:', err);
+                alert('Error generating image. Please try the Download button instead.');
+            }
+        }
+    </script>
+</body>
+</html>

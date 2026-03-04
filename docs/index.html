@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bun + Infisical Docker Image | Fast Runtime with Secure Secrets</title>
+    <meta name="description" content="Production-ready Docker image combining Bun JavaScript runtime with Infisical CLI for secure secrets management. Based on Alpine Linux with multi-arch support.">
+    <meta name="keywords" content="Bun, Infisical, Docker, JavaScript runtime, secrets management, Alpine Linux, container">
+    <meta name="author" content="SSWork">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://atssj.github.io/bun-infisical/">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="Bun + Infisical Docker Image | Fast Runtime with Secure Secrets">
+    <meta property="og:description" content="Production-ready Docker image combining Bun JavaScript runtime with Infisical CLI for secure secrets management. Based on Alpine Linux with multi-arch support.">
+    <!-- PNG is preferred format for social platforms (Twitter, Facebook, LinkedIn). SVG fallback available at og-image.svg -->
+    <meta property="og:image" content="https://atssj.github.io/bun-infisical/assets/images/og-image.png">
+    <meta property="og:image:alt" content="Bun + Infisical Docker Image Logo">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://atssj.github.io/bun-infisical/">
+    <meta property="og:site_name" content="Bun Infisical Docker">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Bun + Infisical Docker Image | Fast Runtime with Secure Secrets">
+    <meta name="twitter:description" content="Production-ready Docker image combining Bun JavaScript runtime with Infisical CLI for secure secrets management. Based on Alpine Linux with multi-arch support.">
+    <meta name="twitter:image" content="https://atssj.github.io/bun-infisical/assets/images/og-image.png">
+    <meta name="twitter:image:alt" content="Bun + Infisical Docker Image Logo">
+    <meta name="twitter:creator" content="@sswork">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="msapplication-TileColor" content="#3b82f6">
+    
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Bun Infisical Docker Image",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Linux",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "description": "Production-ready Docker image combining Bun JavaScript runtime with Infisical CLI for secure secrets management",
+        "url": "https://atssj.github.io/bun-infisical/",
+        "image": "https://atssj.github.io/bun-infisical/assets/images/og-image.png",
+        "softwareVersion": "1.3.10-0.43.58",
+        "releaseNotes": "https://github.com/SSWork/bun-infisical/releases",
+        "downloadUrl": "https://hub.docker.com/r/sswork/bun-infisical",
+        "featureList": [
+            "Bun JavaScript runtime 1.3.10",
+            "Infisical CLI 0.43.58",
+            "Alpine Linux base",
+            "Multi-architecture support",
+            "Secure secrets injection"
+        ],
+        "programmingLanguage": ["JavaScript", "TypeScript"],
+        "license": "https://github.com/SSWork/bun-infisical/blob/main/LICENSE",
+        "author": {
+            "@type": "Organization",
+            "name": "SSWork"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "SSWork"
+        }
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "SSWork",
+        "url": "https://github.com/SSWork",
+        "logo": "https://atssj.github.io/bun-infisical/assets/images/logo.png",
+        "sameAs": [
+            "https://github.com/SSWork"
+        ]
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://atssj.github.io/bun-infisical/"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header class="site-header" role="banner">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo" aria-label="Bun Infisical Docker - Home">
+                    <img src="/assets/images/logo.svg" alt="Bun Infisical Docker" width="40" height="40">
+                    <span class="logo-text">Bun Infisical</span>
+                </a>
+                
+                <nav class="main-nav" role="navigation" aria-label="Main navigation">
+                    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">
+                        <span class="nav-toggle-icon"></span>
+                    </button>
+                    <ul id="nav-menu" class="nav-menu" role="menubar">
+                        <li role="none"><a href="/" class="nav-link active" role="menuitem" aria-current="page">Home</a></li>
+                        <li role="none"><a href="/usage/" class="nav-link" role="menuitem">Usage Guide</a></li>
+                        <li role="none"><a href="/examples/" class="nav-link" role="menuitem">Examples</a></li>
+                        <li role="none"><a href="/ci-cd/" class="nav-link" role="menuitem">CI/CD</a></li>
+                        <li role="none"><a href="https://github.com/SSWork/bun-infisical" class="nav-link external" role="menuitem" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 id="hero-title" class="hero-title">Bun + Infisical Docker Image</h1>
+                    <p class="hero-subtitle">Fast JavaScript runtime meets secure secrets management</p>
+                    <p class="hero-description">
+                        Production-ready Docker image combining <strong>Bun 1.3.10</strong> with <strong>Infisical CLI 0.43.58</strong> 
+                        for blazing-fast JavaScript execution and seamless secrets injection. Built on Alpine Linux for minimal size and maximum security.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#quick-start" class="btn btn-primary">Get Started</a>
+                        <a href="https://hub.docker.com/r/sswork/bun-infisical" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Docker Hub</a>
+                    </div>
+                    <div class="hero-badges">
+                        <span class="badge">Bun 1.3.10</span>
+                        <span class="badge">Infisical 0.43.58</span>
+                        <span class="badge">Alpine Linux</span>
+                        <span class="badge">Multi-Arch</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="quick-start" aria-labelledby="quick-start-title">
+            <div class="container">
+                <h2 id="quick-start-title" class="section-title">Quick Start</h2>
+                
+                <article class="code-example">
+                    <h3 class="code-title">Pull the Image</h3>
+                    <div class="code-block">
+                        <pre><code>docker pull sswork/bun-infisical:latest</code></pre>
+                        <button class="copy-btn" aria-label="Copy pull command" data-clipboard-text="docker pull sswork/bun-infisical:latest">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+                
+                <article class="code-example">
+                    <h3 class="code-title">Run with Infisical</h3>
+                    <div class="code-block">
+                        <pre><code>docker run -e INFISICAL_TOKEN=your-token \
+  -e INFISICAL_API_URL=https://app.infisical.com \
+  sswork/bun-infisical:latest \
+  infisical run -- bun your-app.js</code></pre>
+                        <button class="copy-btn" aria-label="Copy run command" data-clipboard-text="docker run -e INFISICAL_TOKEN=your-token -e INFISICAL_API_URL=https://app.infisical.com sswork/bun-infisical:latest infisical run -- bun your-app.js">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+                
+                <article class="code-example">
+                    <h3 class="code-title">Docker Compose</h3>
+                    <div class="code-block">
+                        <pre><code>version: '3.8'
+services:
+  app:
+    image: sswork/bun-infisical:latest
+    environment:
+      - INFISICAL_TOKEN=${INFISICAL_TOKEN}
+      - INFISICAL_API_URL=${INFISICAL_API_URL}
+    command: infisical run -- bun start</code></pre>
+                        <button class="copy-btn" aria-label="Copy compose configuration" data-clipboard-text="version: '3.8'
+services:
+  app:
+    image: sswork/bun-infisical:latest
+    environment:
+      - INFISICAL_TOKEN=${INFISICAL_TOKEN}
+      - INFISICAL_API_URL=${INFISICAL_API_URL}
+    command: infisical run -- bun start">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="features" aria-labelledby="features-title">
+            <div class="container">
+                <h2 id="features-title" class="section-title">Key Features</h2>
+                <div class="features-grid">
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">⚡</div>
+                        <h3 class="feature-title">Lightning Fast</h3>
+                        <p class="feature-description">
+                            Bun 1.3.10 delivers exceptional JavaScript/TypeScript performance with a fast bundler, test runner, and package manager built-in.
+                        </p>
+                    </article>
+                    
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">🔐</div>
+                        <h3 class="feature-title">Secure by Design</h3>
+                        <p class="feature-description">
+                            Infisical CLI 0.43.58 seamlessly injects secrets at runtime. Environment variables are never committed to your codebase.
+                        </p>
+                    </article>
+                    
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">📦</div>
+                        <h3 class="feature-title">Minimal Footprint</h3>
+                        <p class="feature-description">
+                            Built on Alpine Linux for a compact image size. Multi-architecture support for AMD64 and ARM64 platforms.
+                        </p>
+                    </article>
+                    
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">🚀</div>
+                        <h3 class="feature-title">Production Ready</h3>
+                        <p class="feature-description">
+                            Automated builds, security scanning, and semantic versioning. Perfect for CI/CD pipelines and container orchestration.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="versions" aria-labelledby="versions-title">
+            <div class="container">
+                <h2 id="versions-title" class="section-title">Software Versions</h2>
+                <div class="table-wrapper">
+                    <table class="data-table" role="table" aria-label="Software versions included in the image">
+                        <thead>
+                            <tr role="row">
+                                <th scope="col" role="columnheader">Component</th>
+                                <th scope="col" role="columnheader">Version</th>
+                                <th scope="col" role="columnheader">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr role="row">
+                                <td role="cell"><strong>Bun</strong></td>
+                                <td role="cell"><code>1.3.10</code></td>
+                                <td role="cell">JavaScript runtime, bundler, and package manager</td>
+                            </tr>
+                            <tr role="row">
+                                <td role="cell"><strong>Infisical CLI</strong></td>
+                                <td role="cell"><code>0.43.58</code></td>
+                                <td role="cell">Open-source secrets management CLI</td>
+                            </tr>
+                            <tr role="row">
+                                <td role="cell"><strong>Base Image</strong></td>
+                                <td role="cell"><code>alpine:latest</code></td>
+                                <td role="cell">Lightweight Linux distribution</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="tags" aria-labelledby="tags-title">
+            <div class="container">
+                <h2 id="tags-title" class="section-title">Available Tags</h2>
+                <div class="table-wrapper">
+                    <table class="data-table" role="table" aria-label="Available Docker image tags">
+                        <thead>
+                            <tr role="row">
+                                <th scope="col" role="columnheader">Tag</th>
+                                <th scope="col" role="columnheader">Description</th>
+                                <th scope="col" role="columnheader">Stability</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr role="row">
+                                <td role="cell"><code>latest</code></td>
+                                <td role="cell">Always points to the most recent stable release</td>
+                                <td role="cell"><span class="tag stable">Stable</span></td>
+                            </tr>
+                            <tr role="row">
+                                <td role="cell"><code>1.3.10-0.43.58</code></td>
+                                <td role="cell">Specific version pin for reproducible builds</td>
+                                <td role="cell"><span class="tag stable">Stable</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="environment" aria-labelledby="env-title">
+            <div class="container">
+                <h2 id="env-title" class="section-title">Environment Variables</h2>
+                <div class="table-wrapper">
+                    <table class="data-table" role="table" aria-label="Supported environment variables">
+                        <thead>
+                            <tr role="row">
+                                <th scope="col" role="columnheader">Variable</th>
+                                <th scope="col" role="columnheader">Required</th>
+                                <th scope="col" role="columnheader">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr role="row">
+                                <td role="cell"><code>INFISICAL_TOKEN</code></td>
+                                <td role="cell">Required for secrets access</td>
+                                <td role="cell">Your Infisical service token for authentication</td>
+                            </tr>
+                            <tr role="row">
+                                <td role="cell"><code>INFISICAL_API_URL</code></td>
+                                <td role="cell">Optional</td>
+                                <td role="cell">Custom Infisical API URL (default: https://app.infisical.com)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="navigation-section" aria-labelledby="nav-title">
+            <div class="container">
+                <h2 id="nav-title" class="section-title">Documentation</h2>
+                <nav class="doc-nav" aria-label="Documentation navigation">
+                    <ul class="doc-nav-list">
+                        <li>
+                            <a href="/usage/" class="doc-nav-link">
+                                <span class="doc-nav-icon" aria-hidden="true">📖</span>
+                                <div class="doc-nav-content">
+                                    <h3>Usage Guide</h3>
+                                    <p>Detailed instructions for running and configuring the image</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/examples/" class="doc-nav-link">
+                                <span class="doc-nav-icon" aria-hidden="true">💡</span>
+                                <div class="doc-nav-content">
+                                    <h3>Examples</h3>
+                                    <p>Real-world use cases and sample applications</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/ci-cd/" class="doc-nav-link">
+                                <span class="doc-nav-icon" aria-hidden="true">🔄</span>
+                                <div class="doc-nav-content">
+                                    <h3>CI/CD Integration</h3>
+                                    <p>GitHub Actions, GitLab CI, and other pipeline configurations</p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="/assets/images/logo.svg" alt="" width="32" height="32" aria-hidden="true">
+                    <span>Bun Infisical Docker</span>
+                </div>
+                <nav class="footer-nav" aria-label="Footer navigation">
+                    <ul>
+                        <li><a href="https://github.com/SSWork/bun-infisical" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                        <li><a href="https://hub.docker.com/r/sswork/bun-infisical" target="_blank" rel="noopener noreferrer">Docker Hub</a></li>
+                        <li><a href="https://bun.sh" target="_blank" rel="noopener noreferrer">Bun</a></li>
+                        <li><a href="https://infisical.com" target="_blank" rel="noopener noreferrer">Infisical</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SSWork. Released under the MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js" defer></script>
+</body>
+</html>

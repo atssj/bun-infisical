@@ -1,0 +1,14 @@
+title: "Bun + Infisical Docker Image"
+description: "Fast JavaScript runtime with secure secrets management"
+baseurl: /bun-infisical
+url: ""
+theme: none
+plugins: []
+exclude: []
+
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: none
