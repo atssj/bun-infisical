@@ -1,18 +1,18 @@
 FROM oven/bun:1.3.10-alpine
 
-LABEL maintainer="Your Name"
+LABEL maintainer="S Saha (atssj)"
 LABEL description="Bun 1.3.10 with Infisical CLI 0.43.58"
 
 # Install dependencies
 RUN apk add --no-cache \
     curl \
     bash \
+    sudo \
+    wget \
     ca-certificates
 
 # Install Infisical CLI v0.43.58
-RUN curl -1sLf \
-    'https://dl.cloudsmith.io/public/infisical/infisical-cli/setup.alpine.sh' \
-    | bash && \
+RUN wget -qO- 'https://artifacts-cli.infisical.com/setup.apk.sh' | sudo sh && \
     apk add infisical=0.43.58
 
 # Verify installations
