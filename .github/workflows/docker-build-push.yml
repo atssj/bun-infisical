@@ -16,11 +16,9 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  # Lint job - runs all linters using pre-built image
+  # Lint job - builds lint image locally and runs all linters
   lint:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/atssj/bun-infisical-lint:latest
     permissions:
       contents: read
 
@@ -28,14 +26,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: bun install
+      - name: Build lint image
+        run: docker build -f Dockerfile.lint -t bun-infisical-lint .
 
-      - name: Run linting
-        run: bun run lint
-
-      - name: Check formatting
-        run: oxfmt --check
+      - name: Run linting and formatting
+        run: |
+          docker run --rm -v "$PWD:/workspace" bun-infisical-lint sh -c '
+            bun install &&
+            bun run lint &&
+            oxfmt --check
+          '
 
   # Build job - builds Docker image (no push)
   build:
