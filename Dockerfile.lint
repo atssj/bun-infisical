@@ -1,20 +1,12 @@
-FROM ubuntu:24.04
+FROM oven/bun:1.4.2-debian
 
 # Avoid interactive prompts
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install base dependencies
+# Install shellcheck and download tools
 RUN apt-get update && apt-get install -y \
-    curl \
-    wget \
-    ca-certificates \
-    git \
     shellcheck \
     && rm -rf /var/lib/apt/lists/*
-
-# Install Bun
-RUN curl -fsSL https://bun.sh/install | bash
-ENV PATH="/root/.bun/bin:${PATH}"
 
 # Install hadolint
 RUN wget -O /usr/local/bin/hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64 \
