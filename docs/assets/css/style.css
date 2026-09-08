@@ -17,10 +17,8 @@
 
   /* Modern Shadows */
   --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  --shadow-md:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-lg:
-    0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   --shadow-premium: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 
   /* Radii */
@@ -140,11 +138,7 @@ a:hover {
 }
 
 .logo-text {
-  background: linear-gradient(
-    135deg,
-    var(--dark-text),
-    var(--infisical-purple)
-  );
+  background: linear-gradient(135deg, var(--dark-text), var(--infisical-purple));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -174,11 +168,7 @@ a:hover {
   padding: 8rem 0;
   background:
     radial-gradient(circle at top right, var(--bun-yellow), transparent 40%),
-    radial-gradient(
-      circle at bottom left,
-      hsla(247, 58%, 95%, 1),
-      transparent 40%
-    );
+    radial-gradient(circle at bottom left, hsla(247, 58%, 95%, 1), transparent 40%);
   position: relative;
   overflow: hidden;
 }
@@ -244,11 +234,7 @@ a:hover {
 }
 
 .btn-primary {
-  background: linear-gradient(
-    135deg,
-    var(--infisical-purple),
-    var(--infisical-purple-dark)
-  );
+  background: linear-gradient(135deg, var(--infisical-purple), var(--infisical-purple-dark));
   color: white;
   box-shadow: 0 4px 15px hsla(247, 58%, 56%, 0.3);
 }
@@ -472,8 +458,7 @@ pre {
   padding: 1rem;
   overflow-x: auto;
   font-family:
-    "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New",
-    monospace;
+    "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
   font-size: 0.875rem;
   line-height: 1.7;
   background-color: var(--code-bg);
@@ -481,8 +466,7 @@ pre {
 
 code {
   font-family:
-    "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New",
-    monospace;
+    "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
   font-size: 0.9em;
 }
 

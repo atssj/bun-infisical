@@ -1,0 +1,22 @@
+# Hadolint configuration for Dockerfile linting
+# See https://github.com/hadolint/hadolint/blob/master/CONFIG.md
+
+# Ignored rules
+ignored:
+  # We want to keep specific version pinning for reproducibility
+  - DL3008
+  # We use wget for Infisical CLI installation
+  - DL3013
+  # We want explicit version for security
+  - DL3007
+
+# Trusted registries
+trustedRegistries:
+  - docker.io
+  - ghcr.io
+
+# Strict labels
+strictLabels: false
+
+# Configure rule severity
+failure-threshold: warning

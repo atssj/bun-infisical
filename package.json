@@ -1,0 +1,39 @@
+{
+  "name": "bun-infisical",
+  "version": "1.0.0",
+  "description": "Bun runtime with Infisical CLI pre-installed",
+  "keywords": [
+    "bun",
+    "cli",
+    "docker",
+    "infisical",
+    "secrets"
+  ],
+  "license": "MIT",
+  "author": "S Saha (atssj)",
+  "scripts": {
+    "lint": "hadolint Dockerfile && shellcheck *.sh tests/*.sh && oxlint",
+    "lint:dockerfile": "hadolint Dockerfile",
+    "lint:shell": "shellcheck *.sh tests/*.sh",
+    "lint:js": "oxlint",
+    "format": "bunx oxfmt",
+    "format:check": "bunx oxfmt --check",
+    "format:yaml": "bunx oxfmt '*.yml' '*.yaml'",
+    "format:json": "bunx oxfmt '*.json'",
+    "format:md": "bunx oxfmt '*.md'",
+    "ci": "bun run lint && bun run format:check",
+    "ci:lint": "bun run lint",
+    "ci:format": "bun run format:check",
+    "test": "bash test-docker.sh",
+    "test:windows": "powershell -File test-docker.ps1",
+    "changeset": "bunx changeset",
+    "version": "bunx changeset version",
+    "release": "bunx changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^3.0.1",
+    "oxfmt": "^0.65.0",
+    "oxlint": "^1.77.0"
+  },
+  "packageManager": "bun@1.4.2"
+}
