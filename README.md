@@ -10,10 +10,10 @@ A lightweight Docker image combining [Bun](https://bun.sh/) (fast JavaScript run
 
 This image is available on both Docker Hub and GitHub Container Registry (GHCR):
 
-| Registry | Pull Command |
-|----------|-------------|
-| Docker Hub | `docker pull sswork/bun-infisical:latest` |
-| GHCR | `docker pull ghcr.io/sswork/bun-infisical:latest` |
+| Registry   | Pull Command                                      |
+| ---------- | ------------------------------------------------- |
+| Docker Hub | `docker pull sswork/bun-infisical:latest`         |
+| GHCR       | `docker pull ghcr.io/sswork/bun-infisical:latest` |
 
 ---
 

@@ -1,5 +1,8 @@
 // Main JavaScript for Documentation
 // Vanilla JS, ES6+ features
+/* eslint-disable one-var */
+
+const COPY_FEEDBACK_DURATION_MS = 2000;
 
 // ============================================
 // 1. Copy-to-clipboard for code blocks
@@ -10,7 +13,9 @@ const initCodeCopy = () => {
   copyButtons.forEach((button) => {
     button.addEventListener("click", async () => {
       const text = button.getAttribute("data-clipboard-text");
-      if (!text) return;
+      if (!text) {
+        return;
+      }
 
       try {
         await navigator.clipboard.writeText(text);
@@ -21,9 +26,9 @@ const initCodeCopy = () => {
         setTimeout(() => {
           button.classList.remove("is-copied");
           button.innerHTML = originalIcon;
-        }, 2000);
-      } catch (err) {
-        console.error("Failed to copy:", err);
+        }, COPY_FEEDBACK_DURATION_MS);
+      } catch (error) {
+        console.error("Failed to copy:", error);
       }
     });
   });
@@ -33,10 +38,12 @@ const initCodeCopy = () => {
 // 2. Mobile navigation toggle
 // ============================================
 const initMobileNav = () => {
-  const navToggle = document.querySelector(".nav-toggle");
-  const navMenu = document.querySelector(".nav-menu");
+  const navToggle = document.querySelector(".nav-toggle"),
+    navMenu = document.querySelector(".nav-menu");
 
-  if (!navToggle || !navMenu) return;
+  if (!navToggle || !navMenu) {
+    return;
+  }
 
   navToggle.addEventListener("click", () => {
     const expanded = navToggle.getAttribute("aria-expanded") === "true";
@@ -51,20 +58,19 @@ const initMobileNav = () => {
 // ============================================
 const initScrollReveal = () => {
   const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px",
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-revealed");
-        observer.unobserve(entry.target);
-      }
-    });
-  }, observerOptions);
-
-  const revealElements = document.querySelectorAll(".feature-card, .section-title, .code-example");
+      rootMargin: "0px 0px -50px 0px",
+      threshold: 0.1,
+    },
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-revealed");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions),
+    revealElements = document.querySelectorAll(".feature-card, .section-title, .code-example"),
+    style = document.createElement("style");
   revealElements.forEach((el) => {
     el.style.opacity = "0";
     el.style.transform = "translateY(20px)";
@@ -73,7 +79,6 @@ const initScrollReveal = () => {
   });
 
   // Small internal style for revealed state
-  const style = document.createElement("style");
   style.innerHTML = `
     .is-revealed {
       opacity: 1 !important;
