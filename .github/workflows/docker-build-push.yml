@@ -12,8 +12,9 @@ on:
   workflow_dispatch:
 
 env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  GHCR_REGISTRY: ghcr.io
+  GHCR_IMAGE_NAME: ${{ github.repository }}
+  DOCKERHUB_IMAGE_NAME: sswork/bun-infisical
 
 jobs:
   # Lint job - builds lint image locally and runs all linters
@@ -68,7 +69,7 @@ jobs:
           docker run --rm bun-infisical:test infisical --version
           docker run --rm bun-infisical:test bun --eval "console.log('Docker image test passed')"
 
-  # Build and push job - pushes to GHCR (runs on main/tags)
+  # Build and push job - pushes to Docker Hub and GHCR (runs on main/tags)
   build-and-push:
     runs-on: ubuntu-latest
     needs: build
@@ -88,15 +89,23 @@ jobs:
       - name: Log into GitHub Container Registry
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
+          registry: ${{ env.GHCR_REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Log into Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: |
+            ${{ env.GHCR_REGISTRY }}/${{ env.GHCR_IMAGE_NAME }}
+            ${{ env.DOCKERHUB_IMAGE_NAME }}
           tags: |
             type=ref,event=branch
             type=ref,event=pr

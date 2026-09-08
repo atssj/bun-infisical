@@ -6,6 +6,17 @@ A lightweight Docker image combining [Bun](https://bun.sh/) (fast JavaScript run
 
 ---
 
+## Registries
+
+This image is available on both Docker Hub and GitHub Container Registry (GHCR):
+
+| Registry | Pull Command |
+|----------|-------------|
+| Docker Hub | `docker pull sswork/bun-infisical:latest` |
+| GHCR | `docker pull ghcr.io/sswork/bun-infisical:latest` |
+
+---
+
 ## Tags
 
 | Tag              | Description                    |
@@ -18,8 +29,11 @@ A lightweight Docker image combining [Bun](https://bun.sh/) (fast JavaScript run
 ## Quick Start
 
 ```bash
-# Pull the image
+# Pull the image (Docker Hub)
 docker pull sswork/bun-infisical:latest
+
+# Or pull from GHCR
+docker pull ghcr.io/sswork/bun-infisical:latest
 
 # Run with Infisical
 docker run -it sswork/bun-infisical infisical --version
@@ -35,7 +49,10 @@ docker run -it sswork/bun-infisical bun --version
 ### Dockerfile
 
 ```dockerfile
+# Use either registry:
 FROM sswork/bun-infisical:latest
+# or
+# FROM ghcr.io/sswork/bun-infisical:latest
 
 WORKDIR /app
 COPY package.json bun.lockb ./
@@ -53,7 +70,10 @@ CMD ["infisical", "run", "--", "bun", "start"]
 version: "3.8"
 services:
   app:
+    # Use either registry:
     image: sswork/bun-infisical:latest
+    # or
+    # image: ghcr.io/sswork/bun-infisical:latest
     environment:
       - INFISICAL_TOKEN=${INFISICAL_TOKEN}
     command: infisical run -- bun start
