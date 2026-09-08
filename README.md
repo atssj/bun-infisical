@@ -22,7 +22,7 @@ This image is available on both Docker Hub and GitHub Container Registry (GHCR):
 | Tag              | Description                    |
 | ---------------- | ------------------------------ |
 | `latest`         | Most recent stable build       |
-| `1.3.10-0.43.58` | Bun 1.3.10 + Infisical 0.43.58 |
+| `1.4.2-0.43.129` | Bun 1.4.2 + Infisical 0.43.129 |
 
 ---
 
@@ -92,11 +92,11 @@ services:
 
 ## Software Versions
 
-| Component     | Version      |
-| ------------- | ------------ |
-| Bun           | 1.3.10       |
-| Infisical CLI | 0.43.58      |
-| Base Image    | Alpine Linux |
+| Version       | Component      |
+| ------------- | -------------- |
+| 1.4.2         | Bun            |
+| 0.43.129      | Infisical CLI  |
+| alpine        | Base Image     |
 
 ---
 
@@ -182,8 +182,8 @@ This project uses GitHub Actions for continuous integration and deployment:
 ### Workflow Triggers
 
 - **Pull requests**: Runs linting, formatting checks, and Docker build tests
-- **Push to main**: Runs all checks and pushes to GitHub Container Registry
-- **Tags**: Creates versioned builds and pushes to GHCR
+- **Push to main**: Runs all checks and pushes to Docker Hub + GHCR
+- **Tags**: Creates versioned builds and pushes to both registries
 - **Changesets**: Automated versioning and release management
 
 ### CI Checks
