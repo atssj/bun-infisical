@@ -1,0 +1,17 @@
+# Shellcheck configuration
+# See https://www.shellcheck.net/wiki/
+
+# Disable specific warnings
+disable=SC1091  # Not following: file not found
+disable=SC2034  # Variable appears unused
+disable=SC2086  # Double quote to prevent globbing
+disable=SC2164  # Use 'cd ... || exit' instead of 'cd ...'
+
+# Include source files
+external-sources=true
+
+# Shell type
+shell=bash
+
+# Severity threshold
+severity=warning

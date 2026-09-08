@@ -9,6 +9,7 @@ This document outlines the development plans, testing strategy, and future roadm
 ## Current State
 
 ### Project Description
+
 - **Name**: bun-infisical
 - **Purpose**: Docker image combining Bun JavaScript runtime with Infisical CLI
 - **Base**: Alpine Linux
@@ -17,6 +18,7 @@ This document outlines the development plans, testing strategy, and future roadm
   - Infisical CLI: 0.43.58
 
 ### Repository Structure
+
 ```
 .
 ├── Dockerfile                      # Main image definition
@@ -53,6 +55,7 @@ This document outlines the development plans, testing strategy, and future roadm
 The project uses a comprehensive shell-based test suite (`tests/run-tests.sh`) that validates:
 
 #### 1. Command Availability Tests
+
 - [x] Bun binary exists in PATH
 - [x] Infisical binary exists in PATH
 - [x] curl is installed
@@ -60,11 +63,13 @@ The project uses a comprehensive shell-based test suite (`tests/run-tests.sh`) t
 - [x] wget is installed
 
 #### 2. Version Verification Tests
+
 - [x] Bun version matches expected (1.3.10)
 - [x] Infisical version matches expected (0.43.58)
 - [x] Alpine Linux base confirmed
 
 #### 3. Functional Tests
+
 - [x] Bun can execute JavaScript code
 - [x] Infisical CLI help command works
 - [x] Secret injection pattern works (`infisical run --`)
@@ -72,11 +77,13 @@ The project uses a comprehensive shell-based test suite (`tests/run-tests.sh`) t
 - [x] Environment variables passed correctly
 
 #### 4. Runtime Tests
+
 - [x] Default command works
 - [x] Volume mounts work
 - [x] File operations work
 
 #### 5. Security Tests
+
 - [x] SUID binary count check
 - [x] Image size validation (< 200MB)
 - [x] Trivy CVE scanning (CRITICAL/HIGH)
@@ -84,6 +91,7 @@ The project uses a comprehensive shell-based test suite (`tests/run-tests.sh`) t
 ### Running Tests
 
 #### Local Testing
+
 ```bash
 # Build and test
 make test
@@ -99,7 +107,9 @@ make clean
 ```
 
 #### CI/CD Testing
+
 Tests run automatically on:
+
 - Pull requests (build + test only)
 - Pushes to main (build + test + push)
 - Tag releases (versioned builds)
@@ -107,6 +117,7 @@ Tests run automatically on:
 ### Security Scanning
 
 #### Trivy Integration
+
 - **Tool**: Aqua Security Trivy
 - **Scan Levels**: CRITICAL, HIGH
 - **Output Format**: SARIF (for GitHub Security tab)
@@ -135,11 +146,11 @@ Tests run automatically on:
 
 ### Tagging Strategy
 
-| Event | Tags Created |
-|-------|--------------|
-| Push to main | `latest`, `sha-abc123` |
-| Tag v1.2.3 | `1.2.3`, `1.2`, `1`, `sha-abc123` |
-| Pull Request | `pr-123`, `sha-abc123` |
+| Event        | Tags Created                      |
+| ------------ | --------------------------------- |
+| Push to main | `latest`, `sha-abc123`            |
+| Tag v1.2.3   | `1.2.3`, `1.2`, `1`, `sha-abc123` |
+| Pull Request | `pr-123`, `sha-abc123`            |
 
 ---
 
@@ -148,18 +159,21 @@ Tests run automatically on:
 ### Short Term (1-2 months)
 
 #### Version Updates
+
 - [ ] Automate version bumps for Bun and Infisical
 - [ ] Add renovate/dependabot for automated updates
 - [ ] Test with Bun 1.4.x when released
 - [ ] Test with Infisical CLI 0.44.x when released
 
 #### Testing Enhancements
+
 - [ ] Add integration tests with real Infisical instance
 - [ ] Add multi-arch testing (arm64)
 - [ ] Add performance benchmarks
 - [ ] Add container health checks
 
 #### Documentation
+
 - [ ] Add troubleshooting guide
 - [ ] Add migration guide for version updates
 - [ ] Add contribution guidelines
@@ -167,16 +181,19 @@ Tests run automatically on:
 ### Medium Term (3-6 months)
 
 #### Multi-Architecture Support
+
 - [ ] Build for linux/arm64 (Apple Silicon)
 - [ ] Build for linux/arm/v7 (Raspberry Pi)
 - [ ] Test matrix across all platforms
 
 #### Additional Features
+
 - [ ] Slim variant (without dev dependencies)
 - [ ] Distroless variant (security-focused)
 - [ ] Non-root user variant
 
 #### Tooling
+
 - [ ] Pre-commit hooks for linting
 - [ ] Automated changelog generation
 - [ ] Release automation with GitHub Actions
@@ -184,16 +201,19 @@ Tests run automatically on:
 ### Long Term (6+ months)
 
 #### Ecosystem
+
 - [ ] Helm charts for Kubernetes deployment
 - [ ] Terraform modules
 - [ ] Ansible playbooks
 
 #### Integrations
+
 - [ ] GitHub Action for easy usage
 - [ ] Pre-built CI/CD templates
 - [ ] IDE extensions/vscode devcontainer
 
 #### Advanced Security
+
 - [ ] Cosign image signing
 - [ ] SLSA compliance
 - [ ] SBOM generation and attestation
@@ -204,16 +224,19 @@ Tests run automatically on:
 ## Maintenance Schedule
 
 ### Weekly
+
 - [ ] Review and merge dependabot PRs
 - [ ] Check for security advisories
 - [ ] Monitor issue tracker
 
 ### Monthly
+
 - [ ] Update base image dependencies
 - [ ] Review and update documentation
 - [ ] Analyze test coverage
 
 ### Quarterly
+
 - [ ] Review and update roadmap
 - [ ] Evaluate new Bun features
 - [ ] Evaluate new Infisical features
@@ -224,6 +247,7 @@ Tests run automatically on:
 ## Contribution Guidelines
 
 ### Pull Request Process
+
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make changes with clear commit messages
@@ -232,6 +256,7 @@ Tests run automatically on:
 6. Open a Pull Request
 
 ### Commit Message Format
+
 ```
 type(scope): description
 
@@ -241,6 +266,7 @@ type(scope): description
 ```
 
 Types:
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation changes
@@ -269,6 +295,7 @@ Example: `1.3.10-0.43.58`
 ### Reporting Vulnerabilities
 
 If you discover a security vulnerability, please:
+
 1. **DO NOT** open a public issue
 2. Email security concerns to the maintainer
 3. Allow time for remediation before disclosure
@@ -286,6 +313,7 @@ If you discover a security vulnerability, please:
 ## Metrics & Monitoring
 
 ### Key Metrics
+
 - Image pull count (from GHCR)
 - Build success rate
 - Test pass rate
@@ -293,6 +321,7 @@ If you discover a security vulnerability, please:
 - Issue resolution time
 
 ### Monitoring Tools
+
 - GitHub Insights
 - GitHub Security tab
 - Container Registry analytics
@@ -302,12 +331,14 @@ If you discover a security vulnerability, please:
 ## Resources
 
 ### Links
+
 - [Bun Documentation](https://bun.sh/docs)
 - [Infisical Documentation](https://infisical.com/docs)
 - [Docker Best Practices](https://docs.docker.com/develop/dev-best-practices/)
 - [Trivy Documentation](https://aquasecurity.github.io/trivy/)
 
 ### Related Projects
+
 - `oven/bun` - Official Bun Docker image
 - `infisical/cli` - Official Infisical CLI image
 
@@ -316,6 +347,7 @@ If you discover a security vulnerability, please:
 ## Changelog
 
 ### 2024-03-04
+
 - Added comprehensive test suite with `make test`
 - Added Trivy security scanning
 - Added GitHub Pages documentation site
@@ -323,6 +355,7 @@ If you discover a security vulnerability, please:
 - Added Open Graph image generation
 
 ### 2024-03-03
+
 - Initial release
 - Bun 1.3.10 + Infisical 0.43.58
 - Alpine Linux base
@@ -330,4 +363,4 @@ If you discover a security vulnerability, please:
 
 ---
 
-*This document is a living document and will be updated as the project evolves.*
+_This document is a living document and will be updated as the project evolves._

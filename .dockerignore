@@ -10,6 +10,14 @@
 *.md
 LICENSE
 
+# Linting/Formatting configs (not needed in build context)
+hadolint.yaml
+.shellcheckrc
+.editorconfig
+package.json
+.oxlintrc.json
+.changeset
+
 # Docker files (not needed in build context)
 Dockerfile.*
 docker-compose*
