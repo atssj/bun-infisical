@@ -6,6 +6,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install shellcheck and download tools
 RUN apt-get update && apt-get install -y \
     shellcheck \
+    wget \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 # Install hadolint
