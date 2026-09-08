@@ -34,8 +34,8 @@ jobs:
         id: changesets
         uses: changesets/action@v2
         with:
-          version: bun run version
-          commit: "chore: update versions"
-          title: "chore: update versions"
+          version-script: bun run version
+          commit-message: "chore: update versions"
+          pr-title: "chore: update versions"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
