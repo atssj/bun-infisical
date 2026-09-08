@@ -1,3 +1,6 @@
+# CommandCode internal tooling
+.commandcode/
+
 # Logs
 logs
 *.log

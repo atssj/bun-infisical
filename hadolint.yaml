@@ -9,6 +9,10 @@ ignored:
   - DL3013
   # We want explicit version for security
   - DL3007
+  # Base packages don't need version pinning (security updates via apk)
+  - DL3018
+  # SHELL directive already sets pipefail; hadolint doesn't detect it
+  - DL4006
 
 # Trusted registries
 trustedRegistries:
