@@ -5,14 +5,5 @@
     "perf": "warn",
     "style": "warn"
   },
-  "ignorePatterns": ["node_modules", "dist", "build", ".changeset"],
-  "overrides": [
-    {
-      "files": ["docs/**/*.js"],
-      "categories": {
-        "correctness": "error",
-        "suspicious": "warn"
-      }
-    }
-  ]
+  "ignorePatterns": ["node_modules", "dist", "build", ".changeset"]
 }
