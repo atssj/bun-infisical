@@ -1,0 +1,29 @@
+FROM ubuntu:24.04
+
+# Avoid interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install base dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    wget \
+    ca-certificates \
+    git \
+    shellcheck \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Bun
+RUN curl -fsSL https://bun.sh/install | bash
+ENV PATH="/root/.bun/bin:${PATH}"
+
+# Install hadolint
+RUN wget -O /usr/local/bin/hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64 \
+    && chmod +x /usr/local/bin/hadolint
+
+# Install oxlint and oxfmt globally
+RUN bun install -g oxlint oxfmt
+
+# Verify installations
+RUN bun --version && hadolint --version && shellcheck --version && oxlint --version
+
+WORKDIR /workspace

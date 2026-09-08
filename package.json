@@ -13,6 +13,7 @@
   "author": "S Saha (atssj)",
   "scripts": {
     "lint": "hadolint -c hadolint.yaml Dockerfile && shellcheck *.sh tests/*.sh && oxlint",
+    "lint:local": "docker run --rm -v $(pwd):/workspace ghcr.io/atssj/bun-infisical-lint:latest sh -c 'bun install && bun run lint && oxfmt --check'",
     "lint:dockerfile": "hadolint -c hadolint.yaml Dockerfile",
     "lint:shell": "shellcheck *.sh tests/*.sh",
     "lint:js": "oxlint",
