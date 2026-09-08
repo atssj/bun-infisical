@@ -12,8 +12,8 @@
   "license": "MIT",
   "author": "S Saha (atssj)",
   "scripts": {
-    "lint": "hadolint Dockerfile && shellcheck *.sh tests/*.sh && oxlint",
-    "lint:dockerfile": "hadolint Dockerfile",
+    "lint": "hadolint -c hadolint.yaml Dockerfile && shellcheck *.sh tests/*.sh && oxlint",
+    "lint:dockerfile": "hadolint -c hadolint.yaml Dockerfile",
     "lint:shell": "shellcheck *.sh tests/*.sh",
     "lint:js": "oxlint",
     "format": "bunx oxfmt",

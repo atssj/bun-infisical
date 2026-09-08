@@ -9,8 +9,6 @@ ignored:
   - DL3013
   # We want explicit version for security
   - DL3007
-  # Base packages don't need version pinning (security updates via apk)
-  - DL3018
 
 # Trusted registries
 trustedRegistries:
@@ -20,5 +18,5 @@ trustedRegistries:
 # Strict labels
 strictLabels: false
 
-# Configure rule severity
-failure-threshold: warning
+# Configure rule severity - only fail on errors
+failure-threshold: error
