@@ -57,6 +57,7 @@ jobs:
           context: .
           platforms: linux/amd64
           push: false
+          load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
           tags: bun-infisical:test
